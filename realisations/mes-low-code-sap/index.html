@@ -1,7 +1,182 @@
+
 <!DOCTYPE html>
-<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex"><title>Un MES connecté à l’ERP · Valentin Pataud</title>
-<link rel="stylesheet" href="../../assets/css/style.css"></head><body>
-<header><div class="wrap bar"><a class="brand" href="../../">Valentin Pataud</a></div></header>
-<main><div class="wrap center"><h1>Un MES connecté à l’ERP</h1><p class="lead">Article en cours de rédaction.</p><a class="btn" href="../../">Retour à l’accueil</a></div></main>
-</body></html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Un MES comme point d’entrée unique de la production · Valentin Pataud</title>
+<meta name="description" content="Étude de cas : conception d’un MES sur plateforme low-code, connecté à SAP, pour orchestrer les ordres de fabrication, les temps, les anomalies et les dossiers de lot électroniques.">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Un MES comme point d’entrée unique de la production">
+<meta property="og:description" content="Conception d’un MES connecté à l’ERP pour améliorer la traçabilité, automatiser les échanges et renforcer la continuité d’activité en production.">
+<link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+
+<header>
+<div class="wrap bar">
+<a class="brand" href="../../">Valentin Pataud</a>
+<button id="menu" aria-expanded="false" aria-controls="nav-list">Menu</button>
+<nav aria-label="Navigation principale">
+<ul id="nav-list">
+<li><a href="../../">Accueil</a></li>
+<li><a href="../../services/">Services</a></li>
+<li><a href="../" aria-current="page">Réalisations</a></li>
+<li><a href="../../parcours/">Parcours</a></li>
+<li><a href="../../contact/">Contact</a></li>
+<li><a data-config="cv" href="#">Télécharger le CV</a></li>
+</ul>
+</nav>
+</div>
+</header>
+
+<main id="contenu">
+
+<section>
+<div class="wrap">
+<p class="note"><a href="../">← Toutes les réalisations</a></p>
+<h1>Un MES comme point d’entrée unique de la production</h1>
+<p class="lead">Sur une ligne d’assemblage d’instruments de diagnostic, j’ai regroupé la gestion des ordres, la saisie des temps et le suivi des anomalies dans un seul MES, bâti sur une plateforme low-code et connecté à l’ERP.</p>
+<p class="note">19 octobre 2026 · Valentin Pataud</p>
+<ul class="tags">
+<li>MES</li>
+<li>Tulip</li>
+<li>SAP</li>
+<li>Node-RED</li>
+<li>API REST</li>
+<li>ISA-95</li>
+<li>DDMRP</li>
+</ul>
+<p>Cette étude de cas présente les choix de conception, les interfaces entre systèmes et les enseignements tirés du déploiement.</p>
+<div class="btns">
+<a class="btn" href="../../contact/">Discutons de votre projet</a>
+<a class="btn sec" href="../">Toutes les réalisations</a>
+</div>
+</div>
+</section>
+
+<section class="alt">
+<div class="wrap">
+<h2>Le point de départ</h2>
+<p>Les opérateurs travaillaient avec trois applications distinctes : une pour les ordres de fabrication, une pour les temps, une pour certaines sous-lignes d’assemblage. Chacune avait sa logique et son interface.</p>
+<p>Cette fragmentation entraînait une traçabilité incomplète entre les étapes — numéros de série, rendements et mouvements de matière —, des écarts récurrents entre les temps saisis et l’ERP, ainsi que des interventions manuelles des superviseurs pour réconcilier les informations.</p>
+</div>
+</section>
+
+<section>
+<div class="wrap">
+<h2>L’objectif</h2>
+<p>Donner à chaque opérateur un seul point d’entrée pour tout ce qui concerne son poste, sans perdre la traçabilité :</p>
+<ul>
+<li>une vue claire des ordres à traiter, par ligne et par poste ;</li>
+<li>le suivi des numéros de série et des quantités d’une étape à l’autre ;</li>
+<li>une saisie des temps simple, transmise à l’ERP sans intervention manuelle ;</li>
+<li>une gestion des anomalies intégrée au flux de production ;</li>
+<li>un fonctionnement suffisamment robuste pour maintenir certaines activités lorsque les systèmes voisins sont indisponibles.</li>
+</ul>
+</div>
+</section>
+
+<section class="alt">
+<div class="wrap">
+<h2>Ce que fait le MES</h2>
+<p>Le MES distribue les ordres de fabrication aux bancs d’assemblage selon les priorités issues du planning DDMRP, tout en respectant l’ordre chronologique des opérations : une étape d’assemblage ne peut pas être réalisée après une étape de test qui n’a pas encore eu lieu.</p>
+<p>Les quantités sont suivies entre les opérations. La quantité disponible pour une étape ne peut pas dépasser celle produite à l’étape précédente. Les numéros de série accompagnent le produit jusqu’au bout du processus, y compris en cas de rebut de ligne. Un ordre ne se clôture que lorsque toutes ses phases sont terminées, et les consommations de matière suivent les phases confirmées dans l’ERP.</p>
+<p>Les anomalies — travail non standard, arrêt de ligne ou reprise de matière — sont déclarées directement depuis le MES, avec les informations de l’ordre déjà renseignées. Elles alimentent ensuite le suivi des temps et des indicateurs.</p>
+</div>
+</section>
+
+<section>
+<div class="wrap">
+<h2>Une interface standard pour les dossiers de lot électroniques</h2>
+<p>Les dossiers de lot électroniques (DHR) sont des applications à part entière et des composants sensibles du système. Le MES les relie au moyen d’une interface standard qui met à jour l’ordre — quantité, numéro de série et statut — lorsqu’une étape du DHR se termine.</p>
+<p>Trois familles de DHR ont été distinguées selon la relation entre l’ordre, le numéro de série et les phases de l’ERP :</p>
+<ul>
+<li>un ordre comportant plusieurs phases à compléter ;</li>
+<li>un ordre associé à une seule phase ;</li>
+<li>un DHR autonome, pour lequel l’ordre doit être retrouvé à partir du numéro de série.</li>
+</ul>
+<p>Chaque famille dispose de son propre flux d’interface. Le principe de conception est de limiter au maximum l’effet de l’interface sur le DHR : en cas d’échec, elle ne doit ni modifier ni corrompre ses données.</p>
+<p>Le raccordement d’un nouveau DHR est conçu pour limiter l’impact sur l’application existante. La nécessité d’une revalidation doit toutefois être évaluée selon les procédures qualité du client, en fonction des risques et de l’impact du changement.</p>
+</div>
+</section>
+
+<section class="alt">
+<div class="wrap">
+<h2>Concevoir pour la continuité d’activité</h2>
+<p>La gestion des indisponibilités fait partie du cahier des charges. Si l’ERP ou l’outil de planification est indisponible, les ordres peuvent être saisis côté superviseur et apparaissent aux opérateurs comme étant en cours.</p>
+<p>L’import des ordres dispose d’un flux parallèle qui fonctionne sans l’outil de planification, et les délais d’appel aux API ont été allongés pour limiter les échecs liés aux temps de réponse.</p>
+<p>Un compromis reste à encadrer : l’insertion d’ordres en masse directement dans une table peut être pratique, mais contourne certaines règles d’intégrité des données. Ce type de mécanisme doit être documenté, maîtrisé et évalué au regard des procédures du système.</p>
+</div>
+</section>
+
+<section>
+<div class="wrap">
+<h2>Automatiser pour fiabiliser</h2>
+<p>La saisie des temps constituait une source importante d’écarts. Des automatismes remplacent désormais plusieurs actions manuelles des superviseurs et les boucles qui transmettaient les données à l’ERP, afin de réduire les enregistrements manquants ou en double.</p>
+<p>Des contrôles signalent à l’opérateur une saisie manquante, tandis que les congés peuvent être déclarés en une seule opération pour toute une période.</p>
+</div>
+</section>
+
+<section class="alt">
+<div class="wrap">
+<h2>Architecture</h2>
+<p>Le système s’appuie sur une architecture organisée selon le modèle ISA-95 :</p>
+<ol class="steps">
+<li><strong>Niveau 2 — Acquisition et supervision</strong><br>Une couche SCADA sur Node-RED remonte les données des instruments.</li>
+<li><strong>Niveau 3 — Exécution de la production</strong><br>Le MES, développé sur une plateforme low-code, orchestre les ordres, les dossiers de lot, les anomalies et la saisie des temps.</li>
+<li><strong>Niveau 4 — Gestion de l’entreprise</strong><br>L’ERP SAP porte les données de gestion et reçoit les confirmations de production.</li>
+</ol>
+<p>Le MES joue ainsi le rôle de point de coordination entre les applications de production, les équipements et l’ERP.</p>
+<!-- Ajouter ici un schéma d’architecture ISA-95 redessiné, sans capture d’écran d’application. -->
+</div>
+</section>
+
+<section>
+<div class="wrap">
+<h2>Résultats</h2>
+<div class="grid">
+<div class="stat"><b>≈ 116 h/an</b>de traçabilité papier supprimées</div>
+<div class="stat"><b>Un point d’entrée</b>pour les opérateurs sur leur poste de production</div>
+<div class="stat"><b>Des flux intégrés</b>entre ordres, dossiers de lot, anomalies, temps et ERP</div>
+</div>
+<p>Les superviseurs ont moins d’actions manuelles à effectuer, tandis que la traçabilité se poursuit de l’ordre de fabrication jusqu’au numéro de série. Le système est livré avec un guide de maintenance et des schémas de workflow tenus à jour afin de faciliter sa compréhension et ses évolutions futures.</p>
+</div>
+</section>
+
+<section class="alt">
+<div class="wrap">
+<h2>Ce que j’en retiens</h2>
+<ol>
+<li><strong>Un MES est d’abord un ensemble de règles.</strong> L’ordre des opérations, les quantités disponibles et les conditions de clôture structurent le système ; l’interface vient ensuite.</li>
+<li><strong>Il faut concevoir pour la panne.</strong> Un système de production utile doit anticiper l’indisponibilité de ses dépendances et définir clairement ce qui peut continuer à fonctionner.</li>
+<li><strong>Il faut maîtriser les dépendances.</strong> Limiter les effets d’une interface sur les applications connectées facilite les évolutions, sans remplacer l’évaluation qualité nécessaire à chaque changement.</li>
+<li><strong>La documentation fait partie du livrable.</strong> Sans cartographie des flux et guide à jour, raccorder un nouveau DHR risque de dépendre de la mémoire d’une seule personne.</li>
+</ol>
+</div>
+</section>
+
+<section>
+<div class="wrap">
+<h2>Technologies et méthodes</h2>
+<p>Tulip · SAP · Node-RED · API REST · DDMRP · ISA-95</p>
+<p class="note">Expertise Tulip, indépendante de tout lien d’affiliation avec Tulip Interfaces.</p>
+<div class="btns">
+<a class="btn" href="../../services/">Découvrir les services</a>
+<a class="btn sec" href="../../contact/">Discutons de votre projet</a>
+</div>
+</div>
+</section>
+
+</main>
+
+<footer>
+<div class="wrap">Indépendant, non affilié à Tulip Interfaces · <a href="../../mentions-legales/">Mentions légales</a> · © 2026</div>
+</footer>
+
+<script src="../../assets/js/config.js"></script>
+<script src="../../assets/js/main.js"></script>
+</body>
+</html>
