@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motion control 3 axes : slider, tête pan/tilt et application · Valentin Pataud</title>
+<meta name="description" content="Trois ans de conception, d’usinage et de programmation : un slider de 90 cm, une tête pan/tilt motorisée et une application Android pour piloter un appareil photo en timelapse et en vidéo.">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Conception et fabrication d’un motion control 3 axes">
+<meta property="og:description" content="Slider, tête pan/tilt et application Android : un système complet conçu et fabriqué en trois ans.">
+<link rel="stylesheet" href="../../assets/css/style.css">
+<style>
+/* Mise en page propre à l’article */
+.article{max-width:46rem;padding-top:2.5rem;padding-bottom:3rem}
+.article h1{max-width:none;font-size:clamp(1.75rem,4.5vw,2.5rem)}
+.article h2{margin-top:2.5rem}
+.article .back{display:inline-block;margin-bottom:1.5rem}
+figure{margin:1.75rem 0}
+figure .ph{max-width:none;margin:0}
+figcaption{margin-top:.5rem;color:var(--mu);font-size:.9rem}
+.gallery{display:grid;gap:.75rem;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr))}
+.gallery .ph{margin:0}
+</style>
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+<header><div class="wrap bar">
+<a class="brand" href="../../">Valentin Pataud</a>
+<button id="menu" aria-expanded="false" aria-controls="nav-list">Menu</button>
+<nav aria-label="Navigation principale"><ul id="nav-list">
+<li><a href="../../">Accueil</a></li><li><a href="../../services/">Services</a></li><li><a href="../../realisations/">Réalisations</a></li><li><a href="../../parcours/">Parcours</a></li><li><a href="../../contact/">Contact</a></li>
+<li><a data-config="cv" href="#">Télécharger le CV</a></li>
+</ul></nav></div></header>
+
+<main id="contenu"><article class="wrap article">
+<a class="back" href="../../">← Retour à l’accueil</a>
+<h1>Conception et fabrication d’un motion control 3 axes&nbsp;: slider, tête pan/tilt et application</h1>
+<p class="lead"><em>Trois ans de conception, d’usinage et de programmation pour piloter un appareil photo comme je l’imaginais.</em></p>
+
+<figure>
+<div class="ph"><img src="../../assets/img/motion-control/robot-complet.gif" alt="Le robot complet en action, slider et tête assemblés, pendant un mouvement" loading="lazy" onerror="this.remove()"></div>
+<figcaption>Le robot complet en action, slider et tête assemblés.</figcaption>
+</figure>
+
+<h2>Pourquoi construire son propre système motion control&nbsp;?</h2>
+<p>Je fais du timelapse depuis que j’ai acheté mon premier appareil photo. Après l’intervalomètre que j’avais déjà construit, il me manquait la suite&nbsp;: faire bouger la caméra pendant la prise de vue, ajouter une dimension artistique à mes images, les rendre uniques.</p>
+<p>Les systèmes du commerce, comme le Syrp Magic Carpet et le Genie Mini II, ont été ma source d’inspiration, grâce au travail d’artistes comme Morten Rustad. À la recherche de challenge, je voulais comprendre chaque rouage, me lancer et construire quelque chose qui corresponde exactement à mes besoins.</p>
+<p>Le résultat de mes 3 ans de projet est un système modulaire composé de deux robots indépendants mais connectables&nbsp;: un <strong>slider de 90&nbsp;cm</strong> et une <strong>tête pan/tilt</strong> motorisée, pilotables depuis une <strong>application Android</strong> développée sur mesure. L’ensemble m’a pris trois ans&nbsp;: un an pour le slider, deux pour la tête.</p>
+
+<h2>Le slider&nbsp;: la mécanique avant tout</h2>
+<figure>
+<div class="ph"><img src="../../assets/img/motion-control/chariot-piste.gif" alt="Le chariot du slider qui se déplace sur la piste" loading="lazy" onerror="this.remove()"></div>
+</figure>
+<p>La piste fait 90&nbsp;cm, composée de deux profilés aluminium (V-slot) espacés de 15&nbsp;cm. C’est la quatrième itération&nbsp;: les trois premières, à base de tubes d’acier ronds, ne m’ont pas satisfait. Aux extrémités, des «&nbsp;end caps&nbsp;» à la forme organique assurent la rigidité et la stabilité du robot. On peut y visser un trépied ou déplier des pieds pour poser le slider au sol.</p>
+<p>Le chariot est la pièce maîtresse&nbsp;: il embarque un moteur pas à pas NEMA&nbsp;17 et un contrôleur moteur TMC2225 ultra silencieux, et il est piloté par un Arduino Nano. Il se déplace sur une courroie GT2 tendue par un système à vis. Sa façade, volontairement minimaliste, regroupe un déclencheur électronique pour la caméra (jack 3,5&nbsp;mm), la recharge, un interrupteur, et deux connecteurs Ethernet détournés de leur usage&nbsp;: l’un pour l’IHM filaire, l’autre pour relier la tête.</p>
+<p>Dans sa dernière version, le slider s’est vu ajouter un module HC-06, connecté en liaison série à l’Arduino, pour permettre une connectivité Bluetooth, à l’image de la tête motorisée. Cet ajout permet l’évolution du contrôle du robot de l’IHM filaire à une application Android sur mesure.</p>
+<p>Ce robot est capable de déplacer une charge utile de 3&nbsp;kg à 35&nbsp;mm/s maximum, avec une résolution de 0,1&nbsp;mm.</p>
+<figure>
+<div class="ph"><img src="../../assets/img/motion-control/facade-chariot.gif" alt="La façade du chariot : branchement de l’interface et de la tête" loading="lazy" onerror="this.remove()"></div>
+</figure>
+
+<h2>La tête pan/tilt&nbsp;: deux ans d’itérations</h2>
+<figure>
+<div class="ph"><img src="../../assets/img/motion-control/tete-pan-tilt.gif" alt="Mouvement de pan puis de tilt de la tête" loading="lazy" onerror="this.remove()"></div>
+</figure>
+<p>C’est la partie la plus difficile, et je ne suis pas ingénieur mécanique. Flexion du bras, charge utile, vibrations, collement-glissement du train à vis sans fin de ma première version&nbsp;: il a fallu de nombreuses itérations avant de trouver un compromis.</p>
+<p>La version finale repose sur deux bras en L, en tubes et plats d’aluminium usinés à la main. Le grand bras fait tourner l’ensemble (pan). Il est monté sur un boîtier qui reprend l’esthétique du chariot. Le petit bras, fixé à l’extrémité du grand, incline la caméra (tilt). Chaque axe est entraîné par un petit moteur NEMA&nbsp;17 avec une réduction mécanique par courroie de 5:1, piloté en boucle ouverte, avec des fins de course dans les bras.</p>
+<p>La mécanique du robot, couplée aux fonctionnalités de microstepping des contrôleurs moteurs, permet d’obtenir une précision théorique de 0,02° sur le mouvement, pour une vitesse maximale de 10°/s.</p>
+<p>Un point a beaucoup compté&nbsp;: j’ai aligné le centre d’équilibre de la caméra avec les axes du robot, ce qui réduit fortement l’effort demandé aux moteurs.</p>
+<p>Au total, la tête pèse 1,5&nbsp;kg, peut déplacer une charge utile équilibrée de 1,5&nbsp;kg et tient environ 10 heures sur batterie. Un système d’attache rapide permet un assemblage rapide avec le slider.</p>
+
+<h2>Un design pensé en 3D, fabriqué avec ce que j’avais</h2>
+<figure>
+<div class="ph"><img src="../../assets/img/motion-control/modele-solidworks.gif" alt="Le modèle 3D du robot sous SolidWorks" loading="lazy" onerror="this.remove()"></div>
+<figcaption>Le modèle SolidWorks.</figcaption>
+</figure>
+<p>Tout a été dessiné sous SolidWorks, avec des études de charges et des calculs de réduction pour dimensionner l’ensemble.</p>
+<p>Les pièces sont usinées au tour, à la CNC et à la main, ou imprimées en 3D en PETG pour sa tenue mécanique (passages de câbles, supports du réducteur). Les éléments en PVC viennent de tubes de récupération&nbsp;: fendus dans la longueur, chauffés, aplatis en plaques, puis découpés et collés. Le même état d’esprit que pour mon <a href="../horloge-nixie/">horloge Nixie</a>&nbsp;: faire du beau avec ce qu’on a.</p>
+
+<h2>Électronique et logiciel embarqué</h2>
+<figure>
+<div class="ph"><img src="../../assets/img/motion-control/cartes-electroniques.jpg" alt="Cartes électroniques maison, vues ouvertes du slider et de la tête" loading="lazy" onerror="this.remove()"></div>
+<figcaption>Les cartes électroniques maison, slider et tête ouverts.</figcaption>
+</figure>
+<p>Les circuits sont réalisés maison. Le slider fonctionne autour d’un Arduino Nano, la tête autour d’un ESP32, plus puissant et doté du Bluetooth natif. Les deux partagent la même batterie 12&nbsp;V maison à attache rapide (inspirée des perceuses), que j’utilise aussi sur tous mes autres projets.</p>
+<p>Le programme de la tête, en C++, fait environ 5&nbsp;000 lignes et gère plusieurs processus en parallèle&nbsp;: moteurs, interface, communication, caméra, voyants d’état. Quand la tête est branchée au slider, elle devient <strong>maître</strong> et le slider devient <strong>esclave</strong>. Ils dialoguent par une liaison UART avec un protocole que j’ai conçu, inspiré de Modbus&nbsp;: trames, codes fonctions, checksums, acquittements. Le slider se comporte alors comme un petit automate qui reçoit des ordres (déplacements, positions, niveau de batterie) et en rend compte.</p>
+
+<h2>L’application&nbsp;: de l’écran LCD au smartphone</h2>
+<figure>
+<div class="ph"><img src="../../assets/img/motion-control/interface-application.gif" alt="L’interface de l’application Android : joysticks et menus" loading="lazy" onerror="this.remove()"></div>
+</figure>
+<p>Au départ, le pilotage passait par un écran LCD et un encodeur rotatif en façade. L’application Android reprend ces fonctions avec le confort d’un smartphone. Je l’ai développée dans le cadre d’un projet de semestre à l’école d’ingénieurs, avec l’aide précieuse de mes amis Thomas D, Julien C et Rémi J.</p>
+<p>Elle est principalement développée en Java, sur Android Studio. Son interface rappelle une télécommande de drone, avec des joysticks virtuels et des menus. On y définit des positions clés, la vitesse et la durée du mouvement, puis le mode&nbsp;: <em>shoot-move-shoot</em> ou mouvement fluide, timelapse ou vidéo. Il y a même une fonctionnalité panorama pour reconstituer une photo à 360° avec un appareil classique.</p>
+<p>Et surtout, l’application ne pilote pas le robot en direct&nbsp;: elle transmet des paramètres, et ce sont les algorithmes de l’ESP32 qui construisent la trajectoire de la caméra. Une fois configuré, le robot peut être déconnecté du téléphone et exécute sa séquence seul.</p>
+<figure>
+<div class="ph"><img src="../../assets/img/motion-control/sequence-autonome.gif" alt="Séquence autonome : le robot travaille seul, téléphone posé à côté" loading="lazy" onerror="this.remove()"></div>
+</figure>
+
+<h2>Ce que j’en retiens</h2>
+<p>Cet ambitieux projet m’a obligé à relier des disciplines que je pratiquais séparément&nbsp;: mécanique, électronique, programmation embarquée, protocoles de communication, application mobile. Il m’a aussi appris à itérer sans m’attacher à une solution&nbsp;: trois pistes avant la bonne, une vis sans fin abandonnée, une interface filaire remplacée par du Bluetooth.</p>
+
+<h2>Galerie</h2>
+<p>Photos et timelapse réalisés avec le robot.</p>
+<div class="gallery">
+<div class="ph"><img src="../../assets/img/motion-control/galerie-01.jpg" alt="Photo réalisée avec le robot, 1" loading="lazy" onerror="this.remove()"></div>
+<div class="ph"><img src="../../assets/img/motion-control/galerie-02.jpg" alt="Photo réalisée avec le robot, 2" loading="lazy" onerror="this.remove()"></div>
+<div class="ph"><img src="../../assets/img/motion-control/galerie-03.jpg" alt="Photo réalisée avec le robot, 3" loading="lazy" onerror="this.remove()"></div>
+<div class="ph"><img src="../../assets/img/motion-control/galerie-04.jpg" alt="Photo réalisée avec le robot, 4" loading="lazy" onerror="this.remove()"></div>
+</div>
+
+<div class="btns"><a class="btn" href="../../contact/">Discutons de votre projet</a><a class="btn sec" href="../../">Retour à l’accueil</a></div>
+</article></main>
+
+<footer><div class="wrap">Indépendant, non affilié à Tulip Interfaces · <a href="../../mentions-legales/">Mentions légales</a> · © 2026</div></footer>
+<script src="../../assets/js/config.js"></script>
+<script src="../../assets/js/main.js"></script>
+</body>
+</html>
