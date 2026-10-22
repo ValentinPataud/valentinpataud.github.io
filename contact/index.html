@@ -139,8 +139,8 @@ dialog h2{margin:0 0 .75rem;font-size:1.4rem}
       if (!j.success) throw new Error(j.message);
       f.reset(); soc.disabled = false; soc.required = true; n.textContent = '0'; say('');
       if (dlg.showModal) dlg.showModal(); else alert('Message envoyé');
-    }).catch(function () {
-      say('L’envoi a échoué. Réessayez, ou écrivez-moi directement par e-mail.', true);
+    }).catch(function (j) {
+      say(j.message + 'L’envoi a échoué. Réessayez, ou écrivez-moi directement par e-mail.', true);
     }).then(function () { btn.disabled = false; });
   });
 })();
