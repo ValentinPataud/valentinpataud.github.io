@@ -1,7 +1,149 @@
 <!DOCTYPE html>
-<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex"><title>Contact · Valentin Pataud</title>
-<link rel="stylesheet" href="../assets/css/style.css"></head><body>
-<header><div class="wrap bar"><a class="brand" href="../">Valentin Pataud</a></div></header>
-<main><div class="wrap center"><h1>Contact</h1><p class="lead">Page en cours de rédaction.</p><a class="btn" href="../">Retour à l’accueil</a></div></main>
-</body></html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact · Valentin Pataud</title>
+<meta name="description" content="Un projet de digitalisation en environnement exigeant ou réglementé ? Écrivez-moi : présentez votre besoin et je reviens vers vous.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Contact · Valentin Pataud">
+<meta property="og:description" content="Parlons de votre projet de digitalisation.">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+/* Mise en page propre à la page contact */
+.form{max-width:42rem}
+.form label,.form legend{display:block;font-weight:600;margin-bottom:.3rem}
+.form .opt{font-weight:400;color:var(--mu);font-size:.9rem}
+.form input[type=text],.form input[type=email],.form input[type=tel],.form textarea{width:100%;font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:.4rem;padding:.6rem .75rem}
+.form textarea{min-height:11rem;resize:vertical}
+.form input:disabled{background:var(--bg2);color:var(--mu)}
+.form .row{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));margin-bottom:1.25rem}
+.form .field{margin-bottom:1.25rem}.form .row .field{margin-bottom:0}
+.tel{display:grid;grid-template-columns:5.5rem 1fr;gap:.5rem}
+.check{display:flex;align-items:center;gap:.5rem;margin-top:.5rem;font-weight:400!important}
+.check input{width:auto}
+.count{text-align:right;color:var(--mu);font-size:.85rem;margin:.25rem 0 0}
+.hp{display:none!important}
+#status{min-height:1.5rem;margin-top:1rem}
+#status.err{color:#b3261e}
+@media(prefers-color-scheme:dark){#status.err{color:#f2b8b5}}
+.btn:disabled{opacity:.6;cursor:wait}
+button.btn{font:inherit;font-weight:600;cursor:pointer}
+dialog{border:1px solid var(--bd);border-radius:.6rem;background:var(--bg);color:var(--tx);padding:1.75rem;max-width:24rem}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+dialog h2{margin:0 0 .75rem;font-size:1.4rem}
+</style>
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+<header><div class="wrap bar">
+<a class="brand" href="../">Valentin Pataud</a>
+<button id="menu" aria-expanded="false" aria-controls="nav-list">Menu</button>
+<nav aria-label="Navigation principale"><ul id="nav-list">
+<li><a href="../">Accueil</a></li><li><a href="../services/">Services</a></li><li><a href="../realisations/">Réalisations</a></li><li><a href="./" aria-current="page">Contact</a></li>
+<li><a data-config="cv" href="#">Télécharger le CV</a></li>
+</ul></nav></div></header>
+
+<main id="contenu"><div class="wrap" style="padding-top:2.5rem;padding-bottom:3rem">
+<h1>Contact</h1>
+<p class="lead">Un projet de digitalisation en environnement exigeant ou réglementé&nbsp;? Décrivez votre besoin, je reviens vers vous.</p>
+<p class="note">Les champs marqués d’un astérisque (*) sont obligatoires.</p>
+
+<form id="contact" class="form" novalidate>
+<div class="row">
+<div class="field"><label for="nom">Nom *</label><input type="text" id="nom" name="nom" autocomplete="family-name" required></div>
+<div class="field"><label for="prenom">Prénom *</label><input type="text" id="prenom" name="prenom" autocomplete="given-name" required></div>
+</div>
+
+<div class="field"><label for="email">Adresse e-mail *</label><input type="email" id="email" name="email" autocomplete="email" required></div>
+
+<div class="field"><label for="indicatif">Téléphone <span class="opt">(facultatif)</span></label>
+<div class="tel">
+<input type="text" id="indicatif" name="indicatif" value="+33" inputmode="tel" autocomplete="tel-country-code" aria-label="Indicatif du pays" pattern="\+[0-9]{1,4}">
+<input type="tel" id="tel" name="tel" autocomplete="tel-national" aria-label="Numéro de téléphone" placeholder="6 12 34 56 78">
+</div></div>
+
+<div class="field"><label for="adresse">Adresse <span class="opt">(facultatif)</span></label><input type="text" id="adresse" name="adresse" autocomplete="street-address"></div>
+
+<div class="field"><label for="societe">Société *</label>
+<input type="text" id="societe" name="societe" autocomplete="organization" required>
+<label class="check"><input type="checkbox" id="particulier" name="particulier"> Je suis un particulier</label></div>
+
+<div class="field"><label for="objet">Objet de votre demande *</label><input type="text" id="objet" name="objet" maxlength="120" required></div>
+
+<div class="field"><label for="message">Message *</label>
+<textarea id="message" name="message" maxlength="5000" required></textarea>
+<p class="count" aria-live="off"><span id="n">0</span> / 5&nbsp;000 caractères</p></div>
+
+<input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+<button class="btn" type="submit" id="envoi">Envoyer</button>
+<p id="status" role="status"></p>
+<p class="note">Les informations saisies servent uniquement à répondre à votre demande.</p>
+</form>
+</div></main>
+
+<dialog id="done" aria-labelledby="done-t">
+<h2 id="done-t">Message envoyé</h2>
+<p>Merci, votre message a bien été transmis. Je reviens vers vous rapidement.</p>
+<form method="dialog"><button class="btn">Fermer</button></form>
+</dialog>
+
+<footer><div class="wrap">Indépendant, non affilié à Tulip Interfaces · <a href="../mentions-legales/">Mentions légales</a> · © 2026</div></footer>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/main.js"></script>
+<script>
+(function () {
+  var f = document.getElementById('contact'), st = document.getElementById('status'),
+      btn = document.getElementById('envoi'), soc = document.getElementById('societe'),
+      part = document.getElementById('particulier'), msg = document.getElementById('message'),
+      n = document.getElementById('n'), dlg = document.getElementById('done');
+
+  function v(id) { return document.getElementById(id).value.trim(); }
+  function say(t, err) { st.textContent = t; st.className = err ? 'err' : ''; }
+
+  part.addEventListener('change', function () {
+    soc.disabled = part.checked; soc.required = !part.checked;
+    if (part.checked) soc.value = '';
+  });
+  msg.addEventListener('input', function () { n.textContent = msg.value.length; });
+
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var key = (window.SITE_CONFIG || {}).web3formsKey;
+    if (!f.checkValidity()) { f.reportValidity(); return; }
+    if (v('tel') && !/^\+[0-9]{1,4}$/.test(v('indicatif'))) { say('L’indicatif doit être de la forme +33.', true); return; }
+    if (!key) { say('Le formulaire n’est pas encore activé. Écrivez-moi directement par e-mail.', true); return; }
+
+    var d = new Date(), p = function (x) { return String(x).padStart(2, '0'); },
+        date = p(d.getDate()) + '/' + p(d.getMonth() + 1) + '/' + p(d.getFullYear() % 100);
+    var data = {
+      access_key: key,
+      from_name: 'Site Valentin Pataud',
+      subject: '(' + date + ') ' + v('nom') + ' - ' + v('prenom') + ' / ' + v('objet'),
+      Nom: v('nom'), Prénom: v('prenom'), email: v('email'),
+      Téléphone: v('tel') ? v('indicatif') + ' ' + v('tel') : 'Non renseigné',
+      Adresse: v('adresse') || 'Non renseignée',
+      Société: part.checked ? 'Particulier' : v('societe'),
+      Objet: v('objet'), message: msg.value.trim(),
+      botcheck: f.botcheck.checked
+    };
+
+    btn.disabled = true; say('Envoi en cours…');
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(data)
+    }).then(function (r) { return r.json(); }).then(function (j) {
+      if (!j.success) throw new Error(j.message);
+      f.reset(); soc.disabled = false; soc.required = true; n.textContent = '0'; say('');
+      if (dlg.showModal) dlg.showModal(); else alert('Message envoyé');
+    }).catch(function () {
+      say('L’envoi a échoué. Réessayez, ou écrivez-moi directement par e-mail.', true);
+    }).then(function () { btn.disabled = false; });
+  });
+})();
+</script>
+</body>
+</html>
