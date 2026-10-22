@@ -1,7 +1,95 @@
 <!DOCTYPE html>
-<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex"><title>Des dossiers de lot électroniques interconnectés · Valentin Pataud</title>
-<link rel="stylesheet" href="../../assets/css/style.css"></head><body>
-<header><div class="wrap bar"><a class="brand" href="../../">Valentin Pataud</a></div></header>
-<main><div class="wrap center"><h1>Des dossiers de lot électroniques interconnectés</h1><p class="lead">Article en cours de rédaction.</p><a class="btn" href="../../">Retour à l’accueil</a></div></main>
-</body></html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digitaliser les dossiers de lot (DHR) en environnement dispositif médical · Valentin Pataud</title>
+<meta name="description" content="Retour d’expérience : du dossier papier à des DHR connectés sur une plateforme low-code. 14 applications développées, validées et déployées, dont 11 dossiers de lot électroniques.">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Digitaliser les dossiers de lot (DHR) en environnement dispositif médical">
+<meta property="og:description" content="Du dossier papier à des DHR connectés, sur une plateforme low-code.">
+<link rel="stylesheet" href="../../assets/css/style.css">
+<style>
+/* Mise en page propre à l’article */
+.article{max-width:46rem;padding-top:2.5rem;padding-bottom:3rem}
+.article h1{max-width:none;font-size:clamp(1.75rem,4.5vw,2.5rem)}
+.article h2{margin-top:2.5rem}
+.article .back{display:inline-block;margin-bottom:1.5rem}
+.article ul.list{max-width:68ch;padding-left:1.25rem}
+.article ul.list li{margin-bottom:.9rem}
+figure{margin:1.75rem 0}
+figure .ph{max-width:none;margin:0}
+figcaption{margin-top:.5rem;color:var(--mu);font-size:.9rem}
+</style>
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+<header><div class="wrap bar">
+<a class="brand" href="../../">Valentin Pataud</a>
+<button id="menu" aria-expanded="false" aria-controls="nav-list">Menu</button>
+<nav aria-label="Navigation principale"><ul id="nav-list">
+<li><a href="../../">Accueil</a></li><li><a href="../../services/">Services</a></li><li><a href="../../realisations/">Réalisations</a></li><li><a href="../../parcours/">Parcours</a></li><li><a href="../../contact/">Contact</a></li>
+<li><a data-config="cv" href="#">Télécharger le CV</a></li>
+</ul></nav></div></header>
+
+<main id="contenu"><article class="wrap article">
+<a class="back" href="../../">← Retour à l’accueil</a>
+<h1>Digitaliser les dossiers de lot (DHR) en environnement dispositif médical</h1>
+<p class="lead"><em>Retour d’expérience&nbsp;: du dossier papier à des DHR connectés, sur une plateforme low-code.</em></p>
+
+<h2>Le contexte</h2>
+<p>Chaque dispositif médical fabriqué s’accompagne d’un dossier de lot, le DHR (<em>Device History Record</em>), qui prouve que sa fabrication respecte les exigences. Pendant deux ans chez bioMérieux, à Florence, j’ai digitalisé ces dossiers sur la plateforme low-code Tulip. Au total, 14 applications ont été développées, validées et déployées, dont 11 DHR.</p>
+<figure>
+<div class="ph"><img src="../../assets/img/dossiers-de-lot/schema-applications.png" alt="Vue d’ensemble des 14 applications et de leur rôle" loading="lazy" onerror="this.remove()"></div>
+<figcaption>Vue d’ensemble des 14 applications et de leur rôle.</figcaption>
+</figure>
+
+<h2>Pourquoi digitaliser un DHR</h2>
+<p>Le papier fait son travail, mais il isole l’information&nbsp;: elle reste dans le dossier tant qu’il n’est pas clos, saisie à la main, relue après coup. Digitaliser le DHR change la donne&nbsp;: l’information devient disponible en temps réel pour les autres services, les contrôles se font au fil de l’eau, et le dossier ne dépend plus d’un support physique.</p>
+<p>De plus, le stockage permanent des dossiers de lot devient moins contraignant que l’archivage de montagnes de feuillets.</p>
+
+<h2>Ce que font les applications</h2>
+<ul class="list">
+<li><strong>Recettes et opérations métier.</strong> Les dossiers de lot constituent la trace des opérations réalisées au cours de la production. Leur version numérique peut aller au-delà de la simple consignation des activités&nbsp;: elle peut guider les opérateurs à travers les instructions de fabrication, intégrer les recettes de production et exploiter automatiquement les résultats des opérations. Certaines vérifications peuvent ainsi être réalisées directement sur la ligne, au fil de la production. Le DHR numérique devient alors bien plus qu’un outil de traçabilité réglementaire&nbsp;: il contribue activement à l’exécution, au contrôle et à la fiabilisation des opérations.</li>
+<li><strong>Accès contrôlé.</strong> L’accès aux DHR digitalisés (EBR, <em>Electronic Batch Record</em>) est contrôlé, ce qui répond à l’exigence de savoir qui a fait quoi. Les DHR implémentent alors un système dit «&nbsp;Role-Based Access Control&nbsp;».</li>
+<li><strong>Ordres de production.</strong> Le MES, interfacé avec SAP, distribue les ordres de production aux bancs d’assemblage selon un planning DDMRP (<em>Demand Driven Material Requirements Planning</em>). Ces ordres de production assurent le croisement des données entre les numéros de série qui sortent des lignes et la gestion administrative de l’usine.</li>
+<li><strong>Numéros de série.</strong> Ils sont créés et suivis sur l’ensemble du procédé, y compris le rebut de ligne, avec une interface vers le système de gestion des anomalies.</li>
+<li><strong>Intégration à l’usine.</strong> Ils remplacent le papier et donnent l’information en temps réel aux services concernés, dont le magasin (pièces détachées, supply chain).</li>
+<li><strong>Contrôle qualité automatisé.</strong> Les vérifications se font en temps réel, avec une revue par exception à la fin du processus&nbsp;: l’attention se porte sur les écarts.</li>
+<li><strong>Données instruments.</strong> Elles remontent directement dans le DHR, sans ressaisie, via un système de gestion des données en couche 2 du modèle ISA-95.</li>
+</ul>
+<figure>
+<div class="ph"><img src="../../assets/img/dossiers-de-lot/capture-dhr.png" alt="Capture d’écran anonymisée d’une étape de DHR digitalisé" loading="lazy" onerror="this.remove()"></div>
+<figcaption>Une étape de DHR digitalisé (capture anonymisée).</figcaption>
+</figure>
+
+<h2>L’architecture</h2>
+<p>L’ensemble suit le modèle ISA-95. Au niveau 2, Node-RED assure une couche de type SCADA et IoT&nbsp;: elle collecte les données des instruments et les remonte vers le DHR. Au niveau 3, la plateforme Tulip fait office de MES. La conception répond aux principes d’intégrité des données ALCOA+, et l’ensemble a été validé et qualifié, suivant les normes 21&nbsp;CFR Part&nbsp;11 et ISO&nbsp;13485.</p>
+<figure>
+<div class="ph"><img src="../../assets/img/dossiers-de-lot/schema-architecture-isa95.png" alt="Architecture ISA-95 simplifiée : niveaux 2 et 3" loading="lazy" onerror="this.remove()"></div>
+<figcaption>Architecture ISA-95 simplifiée, niveaux 2 et 3.</figcaption>
+</figure>
+
+<h2>Conformité et rôle</h2>
+<p>Mon rôle porte sur la conception, le développement et le déploiement. La responsabilité de la validation reste celle de l’entreprise&nbsp;: j’ai participé à des validations en tant que référent technique pour les études de risques et de compliance, et joué le rôle d’exécutant des tests sur certains autres systèmes. Les applications sont livrées conformes aux exigences réglementaires indiquées.</p>
+
+<h2>Résultats</h2>
+<ul class="list">
+<li>14 applications déployées, dont 11 DHR, une application de gestion de la qualité et le MES.</li>
+<li>Environ 1&nbsp;100 heures par an économisées (estimation) en production et en qualité, auxquelles s’ajoutent environ 116 heures par an de traçabilité papier supprimée grâce au MES.</li>
+<li>Un déploiement d’abord à Florence, puis une expertise appliquée sur d’autres sites en France.</li>
+<li>Grand Prix Talents V.I.E &amp; ALUMNI 2026, catégorie innovation.</li>
+</ul>
+
+<h2>Ce que j’en retiens</h2>
+<p>Sur Tulip ou d’autres plateformes low-code, le code compte peu. L’essentiel se joue ailleurs&nbsp;: cartographier le procédé, le traduire en processus digitalisé, puis l’intégrer en environnement réglementé, avec la gouvernance, la traçabilité et le contrôle d’accès qui suivent. C’est ce travail qui permet de passer du papier à un système fiable, auditable.</p>
+
+<div class="btns"><a class="btn" href="../../contact/">Discutons de votre projet</a><a class="btn sec" href="../mes-low-code-sap/">Voir l’étude de cas du MES</a></div>
+</article></main>
+
+<footer><div class="wrap">Indépendant, non affilié à Tulip Interfaces · <a href="../../mentions-legales/">Mentions légales</a> · © 2026</div></footer>
+<script src="../../assets/js/config.js"></script>
+<script src="../../assets/js/main.js"></script>
+</body>
+</html>
