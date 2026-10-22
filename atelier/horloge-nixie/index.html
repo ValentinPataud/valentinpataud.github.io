@@ -1,7 +1,85 @@
 <!DOCTYPE html>
-<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex"><title>Horloge à tubes Nixie · Valentin Pataud</title>
-<link rel="stylesheet" href="../../assets/css/style.css"></head><body>
-<header><div class="wrap bar"><a class="brand" href="../../">Valentin Pataud</a></div></header>
-<main><div class="wrap center"><h1>Horloge à tubes Nixie</h1><p class="lead">Article en cours de rédaction.</p><a class="btn" href="../../">Retour à l’accueil</a></div></main>
-</body></html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Horloge Nixie à 4 tubes : faire du beau avec ce qu’on a · Valentin Pataud</title>
+<meta name="description" content="Une horloge à tubes Nixie construite en 2019 avec des matériaux de récupération : électronique haute tension, boîtier en bois et acier, code embarqué. Elle fonctionne toujours sept ans plus tard.">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Horloge Nixie à 4 tubes : faire du beau avec ce qu’on a">
+<meta property="og:description" content="Six mois de conception, et une horloge qui tourne encore sept ans plus tard.">
+<link rel="stylesheet" href="../../assets/css/style.css">
+<style>
+/* Mise en page propre à l’article */
+.article{max-width:46rem;padding-top:2.5rem;padding-bottom:3rem}
+.article h1{max-width:none;font-size:clamp(1.75rem,4.5vw,2.5rem)}
+.article h2{margin-top:2.5rem}
+.article .back{display:inline-block;margin-bottom:1.5rem}
+figure{margin:1.75rem 0}
+figure .ph{max-width:none;margin:0}
+figcaption{margin-top:.5rem;color:var(--mu);font-size:.9rem}
+</style>
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+<header><div class="wrap bar">
+<a class="brand" href="../../">Valentin Pataud</a>
+<button id="menu" aria-expanded="false" aria-controls="nav-list">Menu</button>
+<nav aria-label="Navigation principale"><ul id="nav-list">
+<li><a href="../../">Accueil</a></li><li><a href="../../services/">Services</a></li><li><a href="../../realisations/">Réalisations</a></li><li><a href="../../parcours/">Parcours</a></li><li><a href="../../contact/">Contact</a></li>
+<li><a data-config="cv" href="#">Télécharger le CV</a></li>
+</ul></nav></div></header>
+
+<main id="contenu"><article class="wrap article">
+<a class="back" href="../../">← Retour à l’accueil</a>
+<h1>Horloge Nixie à 4 tubes&nbsp;: faire du beau avec ce qu’on a</h1>
+<p class="lead"><em>Six mois de conception, et une horloge qui tourne encore sept ans plus tard.</em></p>
+
+<figure>
+<div class="ph"><img src="../../assets/img/horloge-nixie/horloge-face.jpg" alt="L’horloge Nixie allumée, vue de face" loading="lazy" onerror="this.remove()"></div>
+<figcaption>L’horloge allumée, vue de face.</figcaption>
+</figure>
+
+<h2>L’idée de départ</h2>
+<p>Cette horloge est née d’une envie&nbsp;: réaliser quelque chose de beau avec ce que j’avais sous la main, dans une démarche d’upcycling. Je m’étais inspiré de vidéos YouTube et d’articles trouvés sur le web, qui m’avaient donné le goût de l’esthétique steampunk des tubes Nixie.</p>
+
+<h2>L’électronique</h2>
+<p>Le cœur du système est, une fois de plus, un Arduino Nano, programmé pour lire un module d’horloge temps réel DS1307. Il pilote un réseau de quatre registres à décalage 74HC595, un par tube. Ces circuits commandent à leur tour des transistors MPSA42, capables de supporter les 180&nbsp;V que demandent les tubes. Cette tension est fournie par une alimentation dédiée.</p>
+<p>Les 4 tubes QS27-1 sont rétroéclairés par des LED RGB. Leur couleur et leur intensité se règlent avec un bouton situé sur la face arrière.</p>
+<p>Les circuits sont réalisés à la main, sur des cartes standard au pas de 2,54&nbsp;mm, après des essais sur breadboard. Le schéma électronique et le code en C++ ont été créés entièrement à la main, avant l’arrivée des assistants IA.</p>
+<figure>
+<div class="ph"><img src="../../assets/img/horloge-nixie/interieur-cartes.jpg" alt="L’intérieur de l’horloge : les cartes électroniques" loading="lazy" onerror="this.remove()"></div>
+<figcaption>L’intérieur de l’horloge, avec les cartes électroniques.</figcaption>
+</figure>
+<figure>
+<div class="ph"><img src="../../assets/img/horloge-nixie/schema-synoptique.png" alt="Schéma synoptique : Arduino, registres à décalage, transistors et tubes" loading="lazy" onerror="this.remove()"></div>
+<figcaption>Schéma synoptique&nbsp;: Arduino, registres, transistors, tubes.</figcaption>
+</figure>
+
+<h2>Le boîtier</h2>
+<p>Les faces avant et latérales sont en bois massif de récupération&nbsp;: de la plinthe ou de la frisette de menuiserie, découpée à la CNC, collée, poncée et finie à la cire.</p>
+<p>Le dessus, le fond et le dessous sont une tôle d’acier galvanisé récupérée dans un four, poncée puis pliée.</p>
+<p>En ponçant, le zinc de la galvanisation laisse apparaître des stries qui évoquent l’acier damas, ce qui donne à l’horloge une apparence que je trouve très réussie.</p>
+<figure>
+<div class="ph"><img src="../../assets/img/horloge-nixie/detail-tole-bois.jpg" alt="Détail de la tôle d’acier poncée et du bois" loading="lazy" onerror="this.remove()"></div>
+<figcaption>Détail de la tôle et du bois.</figcaption>
+</figure>
+
+<h2>Les outils</h2>
+<p>Les pièces usinées ou imprimées en 3D ont été dessinées sous SolidWorks et préparées en CAM sous Fusion&nbsp;360. L’usinage se fait à la CNC avec Universal G-Code Sender, une chaîne très rudimentaire mais qui fonctionne bien, et les pièces imprimées l’ont été sur une Creality Ender&nbsp;3 de première génération.</p>
+
+<h2>Sept ans plus tard</h2>
+<p>L’horloge est toujours là et fonctionne encore, branchée en continu. Elle a une limite connue&nbsp;: le module DS1307 dérive de quelques minutes par semaine. Une piste d’amélioration serait de le remplacer par un module à quartz compensé en température, comme le DS3231, qui se branche de la même façon.</p>
+
+<h2>Ce que j’en retiens</h2>
+<p>Ce projet a été une belle courbe d’apprentissage en débrouille&nbsp;: électronique avec une haute tension, menuiserie, usinage, impression 3D, programmation embarquée. Il m’a surtout appris à faire le mieux possible avec ce qu’on a sous la main.</p>
+
+<div class="btns"><a class="btn" href="../../contact/">Discutons de votre projet</a><a class="btn sec" href="../motion-control/">Voir le motion control 3 axes</a></div>
+</article></main>
+
+<footer><div class="wrap">Indépendant, non affilié à Tulip Interfaces · <a href="../../mentions-legales/">Mentions légales</a> · © 2026</div></footer>
+<script src="../../assets/js/config.js"></script>
+<script src="../../assets/js/main.js"></script>
+</body>
+</html>
