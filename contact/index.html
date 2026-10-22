@@ -111,7 +111,7 @@ dialog h2{margin:0 0 .75rem;font-size:1.4rem}
 
   f.addEventListener('submit', function (e) {
     e.preventDefault();
-    var key = (window.SITE_CONFIG || {}).web3formsKey;
+    var key = window.SITE_CONFIG.web3formsKey || {};
     if (!f.checkValidity()) { f.reportValidity(); return; }
     if (v('tel') && !/^\+[0-9]{1,4}$/.test(v('indicatif'))) { say('L’indicatif doit être de la forme +33.', true); return; }
     if (!key) { say('Le formulaire n’est pas encore activé. Écrivez-moi directement par e-mail.', true); return; }
