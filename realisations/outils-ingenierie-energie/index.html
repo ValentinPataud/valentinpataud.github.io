@@ -1,7 +1,104 @@
 <!DOCTYPE html>
-<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex"><title>Outils d’ingénierie pour la transition énergétique · Valentin Pataud</title>
-<link rel="stylesheet" href="../../assets/css/style.css"></head><body>
-<header><div class="wrap bar"><a class="brand" href="../../">Valentin Pataud</a></div></header>
-<main><div class="wrap center"><h1>Outils d’ingénierie pour la transition énergétique</h1><p class="lead">Article en cours de rédaction.</p><a class="btn" href="../../">Retour à l’accueil</a></div></main>
-</body></html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Des outils d’ingénierie pour la transition énergétique · Valentin Pataud</title>
+<meta name="description" content="Trois ans d’outils d’ingénierie construits autour d’Excel et de VBA : dimensionnement et chiffrage de bornes de recharge et de photovoltaïque, pilotage intelligent de bâtiments simulé par machine learning.">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Des outils d’ingénierie pour la transition énergétique">
+<meta property="og:description" content="Encapsuler une technique complexe pour que des non-spécialistes produisent des études fiables.">
+<link rel="stylesheet" href="../../assets/css/style.css">
+<style>
+/* Mise en page propre à l’article */
+.article{max-width:46rem;padding-top:2.5rem;padding-bottom:3rem}
+.article h1{max-width:none;font-size:clamp(1.75rem,4.5vw,2.5rem)}
+.article h2{margin-top:2.5rem;max-width:none}
+.article .back{display:inline-block;margin-bottom:1.5rem}
+.article ol.list{max-width:68ch;padding-left:1.25rem}
+.article ol.list li{margin-bottom:.9rem}
+figure{margin:1.75rem 0}
+figure .ph{max-width:none;margin:0}
+figcaption{margin-top:.5rem;color:var(--mu);font-size:.9rem}
+</style>
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+<header><div class="wrap bar">
+<a class="brand" href="../../">Valentin Pataud</a>
+<button id="menu" aria-expanded="false" aria-controls="nav-list">Menu</button>
+<nav aria-label="Navigation principale"><ul id="nav-list">
+<li><a href="../../">Accueil</a></li><li><a href="../../services/">Services</a></li><li><a href="../../realisations/">Réalisations</a></li><li><a href="../../parcours/">Parcours</a></li><li><a href="../../contact/">Contact</a></li>
+<li><a data-config="cv" href="#">Télécharger le CV</a></li>
+</ul></nav></div></header>
+
+<main id="contenu"><article class="wrap article">
+<a class="back" href="../../">← Retour à l’accueil</a>
+<h1>Des outils d’ingénierie pour la transition énergétique</h1>
+<p class="lead">Pendant trois ans, j’ai conçu des outils d’ingénierie construits autour d’Excel et de VBA&nbsp;: deux outils de dimensionnement et de chiffrage (recharge de véhicules électriques, photovoltaïque) et une démarche de pilotage intelligent de bâtiments, simulée avec du machine learning. Leur point commun&nbsp;: encapsuler une technique complexe pour que des commerciaux et des ingénieurs d’affaires, non spécialistes de l’électricité, produisent des études fiables.</p>
+
+<h2>Le contexte</h2>
+<p>L’objectif est de répondre à des offres de transition énergétique avec des démarches structurées et des chiffrages précis. Ma mission&nbsp;: automatiser les études techniques et standardiser les méthodes, en rendant la technique invisible pour l’utilisateur. J’ai mené la plupart de ces projets en autonomie, puis je suis devenu référent technique sur l’IRVE et le photovoltaïque auprès des équipes commerciales et techniques.</p>
+
+<h2>Outil 1&nbsp;: dimensionnement et chiffrage de bornes de recharge (IRVE)</h2>
+<p><strong>Le principe.</strong> L’utilisateur décrit l’installation avec peu d’informations, toutes non techniques&nbsp;: modèle de borne, longueurs de câbles, de conduits et de tranchées, socle béton éventuel. L’outil dimensionne toute la partie électrique, du point de livraison jusqu’aux bornes, puis chiffre l’ensemble.</p>
+<p><strong>L’architecture.</strong> Une interface principale, une base de données de références et des modules de traitement pilotés par des macros VBA.</p>
+<p><strong>La modélisation.</strong> Une installation est un graphe&nbsp;: les nœuds sont les bornes et les tableaux électriques, les arêtes sont les liaisons câblées. Cette représentation se traite facilement par machine et reste lisible pour des collègues. Un didacticiel et une documentation technique expliquent la méthode.</p>
+<figure>
+<div class="ph"><img src="../../assets/img/outils-energie/graphe-irve.png" alt="Graphe d’une installation de recharge : bornes, tableaux électriques et liaisons câblées (données fictives)" loading="lazy" onerror="this.remove()"></div>
+<figcaption>Le graphe d’une installation de recharge (données fictives).</figcaption>
+</figure>
+<p><strong>Les calculs.</strong> Sections de câbles, calibres des protections, tailles d’armoires, dimensions des conduits et des tranchées, dans le respect de la norme NF C 15-100, puis sélection des références dans la base. Le cumul des puissances repose sur un algorithme d’optimisation combinatoire inspiré du problème du sac à dos&nbsp;: il répartit les charges sur les trois phases pour obtenir la puissance de ligne maximale la plus basse possible. L’enjeu est économique, car le prix du matériel augmente fortement avec le calibre des protections et des câbles.</p>
+<p><strong>Le réseau.</strong> Les bornes communiquent avec un service de supervision par le protocole OCPP. L’outil chiffre aussi le réseau informatique associé&nbsp;: switches, modem 4G, abonnement.</p>
+<p><strong>Le chiffrage.</strong> Pour chaque borne et chaque tableau&nbsp;: références, prix unitaires, quantités et temps d’installation unitaires, calés sur le retour d’expérience et l’avis de professionnels. Les démarches administratives sont intégrées. Le résultat sert de référence pour construire une offre et pour confronter les prix des sous-traitants.</p>
+
+<h2>Outil 2&nbsp;: dimensionnement et chiffrage photovoltaïque</h2>
+<p><strong>Le besoin.</strong> D’un côté, un marketing et des garanties de résultat bien établis&nbsp;; de l’autre, des outils de calcul de productible et d’étude financière. Il manquait le maillon intermédiaire&nbsp;: l’installation elle-même, avec ses caractéristiques techniques, ses limites et son prix le plus juste. J’ai commencé par une veille technologique et réglementaire, y compris sur le stockage par batteries, avant de concevoir l’outil.</p>
+<p><strong>L’architecture.</strong> Une base de données de matériel, une interface dynamique, des algorithmes de calcul et d’optimisation, un générateur de schéma de principe et un export de devis et de business plan. Plusieurs mois de travail.</p>
+<p><strong>Une interface qui guide.</strong> Les choix proposés s’adaptent aux réponses précédentes, ce qui limite les erreurs de conception. Les données demandées restent simples (pans de toiture, orientation, longueurs estimées), jamais des tensions ou des courants.</p>
+<p><strong>La modélisation.</strong> Une architecture de référence représentée par un arbre&nbsp;: le point de livraison à la racine, puis un tableau électrique, les onduleurs, leurs entrées, les chaînes de panneaux et les tableaux de jonction. J’ai retiré tout le superflu pour ne garder que le squelette d’une installation.</p>
+<figure>
+<div class="ph"><img src="../../assets/img/outils-energie/arbre-photovoltaique.png" alt="Arbre d’une installation photovoltaïque, du point de livraison aux chaînes de panneaux (données fictives)" loading="lazy" onerror="this.remove()"></div>
+<figcaption>L’arbre d’une installation photovoltaïque (données fictives).</figcaption>
+</figure>
+<p><strong>L’algorithme clé.</strong> Pour chaque pan de toit, l’outil calcule un calepinage, puis cherche le câblage série/parallèle qui respecte les limites de tension et de courant des onduleurs tout en limitant le nombre de chaînes, donc d’entrées d’onduleur utilisées. Modéliser ce problème en arithmétique modulaire (résoudre des systèmes de congruences «&nbsp;à l’envers&nbsp;») a été la vraie difficulté&nbsp;: plusieurs jours de travail, pour un programme en VBA.</p>
+<p><strong>Les livrables.</strong> Un schéma de principe dessiné automatiquement avec les outils graphiques d’Excel, assez précis pour être relu par des experts, et un devis dont les formules restent visibles, avec des taux de marge modifiables et des prestations optionnelles (maintenance, nettoyage, assurances, télégestion).</p>
+<p><strong>Le déploiement.</strong> Présentation aux équipes commerciales, documentation avec exemples, puis suivi et amélioration continue à partir des retours des utilisateurs.</p>
+
+<h2>Outil 3&nbsp;: pilotage intelligent de bâtiments (Smart Grid)</h2>
+<p><strong>Le périmètre.</strong> Mon projet de fin d’études, sur un sujet peu développé. L’objectif n’était pas un produit prêt à l’emploi, mais une démarche d’étude pour estimer les enjeux financiers et énergétiques du pilotage des consommations.</p>
+<p><strong>Le principe.</strong> La courbe de charge d’un bâtiment est la somme de ses consommations, que je répartis en deux catégories&nbsp;: les consommateurs maîtrisés (pompes à chaleur, ventilation, climatisation) et les consommateurs stochastiques (éclairage, électronique). Quand une pointe apparaît, le système agit sur les équipements maîtrisés, dans les limites de leurs contraintes d’usage (température, taux de CO<sub>2</sub>, humidité)&nbsp;: délestage ou régime réduit, selon un ordre de priorité. Le résultat est un lissage de la courbe de charge et une réduction de la puissance souscrite.</p>
+<p><strong>La simulation.</strong> Un algorithme en Python, piloté depuis Excel, simule le fonctionnement d’un automate de pilotage. Il propose deux simulations&nbsp;: une estimation statistique d’un an à partir d’un échantillon de jours tirés au hasard (un calcul bien plus rapide, avec une marge d’erreur maîtrisée), et une simulation sur quelques jours consécutifs pour visualiser l’effet. Le bilan compare puissance et énergie avant et après pilotage, et chiffre l’économie annuelle sur l’abonnement.</p>
+<p><strong>Le vrai défi&nbsp;: détecter les pointes à temps.</strong> Une décomposition STL (<em>Seasonal and Trend decomposition</em>) sépare la courbe en saisonnalité, tendance et résidus&nbsp;: une pointe est une anomalie par rapport au comportement naturel du bâtiment. Mais comment prédire ce qu’on ne sait pas décrire&nbsp;?</p>
+<p>Pour différencier les pointes du signal normal, il faut lisser. Tout lissage mathématique d’un signal en temps réel accuse un retard&nbsp;; le lissage exponentiel donne un retard maîtrisé. J’ai ensuite testé la dérivation et plusieurs modèles de détection d’anomalies (Local Outlier Factor, auto-encodeur, KNN, via la bibliothèque PyOD, validés avec l’AUROC). Aucun n’a été concluant&nbsp;: la saisonnalité noie les pointes, et il faut que la pointe arrive pour la détecter.</p>
+<p><strong>La solution retenue.</strong> Un modèle prédictif, Prophet, choisi pour sa simplicité&nbsp;: peu de paramètres, pas de calibration avant chaque usage (contrairement aux modèles de type ARMA), donc utilisable par des collègues. Il prédit la courbe à court terme&nbsp;; l’étude des dérivées premières de l’écart avec le signal réel signale une pointe, sans seuil de puissance fixe. Le délesteur applique alors les régimes réduits et estime l’impact sur le bâtiment.</p>
+<figure>
+<div class="ph"><img src="../../assets/img/outils-energie/courbe-charge-lissage.png" alt="Courbe de charge d’un bâtiment avant et après lissage (données fictives)" loading="lazy" onerror="this.remove()"></div>
+<figcaption>Une courbe de charge avant et après lissage (données fictives).</figcaption>
+</figure>
+<p><strong>Les limites.</strong> La simulation agit sur les courbes de consommation plutôt que sur le comportement des équipements, et le lissage n’est pas garanti pour toutes les pointes.</p>
+
+<h2>Pourquoi Excel</h2>
+<p>Le choix d’Excel était imposé au départ. Je l’ai transformé en avantage&nbsp;: un outil intuitif, sans installation, facile à maintenir et déjà maîtrisé par les ingénieurs d’études et d’affaires. VBA apporte la logique, les interfaces dynamiques et la génération de schémas&nbsp;; Python apporte le machine learning, appelé depuis Excel. La contrepartie est une exigence de rigueur&nbsp;: un fichier qui porte des règles métier doit être structuré et documenté comme un logiciel.</p>
+
+<h2>Ce que j’en retiens</h2>
+<ol class="list">
+<li>Le plus difficile n’est pas le calcul, mais l’équilibre entre la simplicité de ce que voit l’utilisateur et la complexité de ce que fait l’outil.</li>
+<li>Modéliser le problème est le vrai travail&nbsp;: un graphe, un arbre ou un système de congruences rendent ensuite l’algorithme simple.</li>
+<li>Le meilleur modèle est celui que l’utilisateur peut faire tourner seul&nbsp;: j’ai écarté des modèles plus classiques parce qu’ils demandaient une calibration à chaque usage.</li>
+<li>Documenter et former fait partie du livrable&nbsp;: didacticiel, documentation technique, présentation aux équipes, suivi.</li>
+<li>Cette démarche est celle que j’applique aujourd’hui, dans un environnement plus encadré.</li>
+</ol>
+
+<h2>Technologies</h2>
+<ul class="tags"><li>Excel</li><li>VBA</li><li>Python</li><li>Prophet</li><li>Décomposition STL</li><li>Optimisation combinatoire</li><li>Graphes</li><li>Arithmétique modulaire</li><li>Protocole OCPP</li><li>Norme NF C 15-100</li></ul>
+
+<div class="btns"><a class="btn" href="../../contact/">Discutons de votre projet</a><a class="btn sec" href="../dossiers-de-lot-electroniques/">Voir l’étude de cas des DHR</a></div>
+</article></main>
+
+<footer><div class="wrap">Indépendant, non affilié à Tulip Interfaces · <a href="../../mentions-legales/">Mentions légales</a> · © 2026</div></footer>
+<script src="../../assets/js/config.js"></script>
+<script src="../../assets/js/main.js"></script>
+</body>
+</html>
