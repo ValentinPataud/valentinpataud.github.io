@@ -21,6 +21,8 @@ figure .ph{max-width:none;margin:0}
 figcaption{margin-top:.5rem;color:var(--mu);font-size:.9rem}
 .gallery{display:grid;gap:.75rem;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr))}
 .gallery .ph{margin:0}
+figure .ph.vertical{aspect-ratio:9/16;max-width:405px;margin-left:auto;margin-right:auto}
+.ph.vertical img{object-fit:contain}
 </style>
 </head>
 <body>
@@ -50,7 +52,7 @@ figcaption{margin-top:.5rem;color:var(--mu);font-size:.9rem}
 
 <h2>Le slider&nbsp;: la mécanique avant tout</h2>
 <figure>
-<div class="ph"><img src="../../assets/img/motion-control/chariot-piste.gif" alt="Le chariot du slider qui se déplace sur la piste" loading="lazy" onerror="this.remove()"></div>
+<div class="ph vertical"><img src="../../assets/img/motion-control/chariot-piste.gif" alt="Le chariot du slider qui se déplace sur la piste" loading="lazy" onerror="this.remove()"></div>
 </figure>
 <p>La piste fait 90&nbsp;cm, composée de deux profilés aluminium (V-slot) espacés de 15&nbsp;cm. C’est la quatrième itération&nbsp;: les trois premières, à base de tubes d’acier ronds, ne m’ont pas satisfait. Aux extrémités, des «&nbsp;end caps&nbsp;» à la forme organique assurent la rigidité et la stabilité du robot. On peut y visser un trépied ou déplier des pieds pour poser le slider au sol.</p>
 <p>Le chariot est la pièce maîtresse&nbsp;: il embarque un moteur pas à pas NEMA&nbsp;17 et un contrôleur moteur TMC2225 ultra silencieux, et il est piloté par un Arduino Nano. Il se déplace sur une courroie GT2 tendue par un système à vis. Sa façade, volontairement minimaliste, regroupe un déclencheur électronique pour la caméra (jack 3,5&nbsp;mm), la recharge, un interrupteur, et deux connecteurs Ethernet détournés de leur usage&nbsp;: l’un pour l’IHM filaire, l’autre pour relier la tête.</p>
