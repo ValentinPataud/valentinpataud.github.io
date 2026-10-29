@@ -21,6 +21,8 @@
 figure{margin:1.75rem 0}
 figure .ph{max-width:none;margin:0}
 figcaption{margin-top:.5rem;color:var(--mu);font-size:.9rem}
+figure .ph.carre{aspect-ratio:14.7/16;max-width:30rem;margin-left:auto;margin-right:auto}
+.ph.carre img{object-fit:contain}
 </style>
 </head>
 <body>
@@ -74,7 +76,7 @@ figcaption{margin-top:.5rem;color:var(--mu);font-size:.9rem}
 <p>Pour différencier les pointes du signal normal, il faut lisser. Tout lissage mathématique d’un signal en temps réel accuse un retard&nbsp;; le lissage exponentiel donne un retard maîtrisé. J’ai ensuite testé la dérivation et plusieurs modèles de détection d’anomalies (Local Outlier Factor, auto-encodeur, KNN, via la bibliothèque PyOD, validés avec l’AUROC). Aucun n’a été concluant&nbsp;: la saisonnalité noie les pointes, et il faut que la pointe arrive pour la détecter.</p>
 <p><strong>La solution retenue.</strong> Un modèle prédictif, Prophet, choisi pour sa simplicité&nbsp;: peu de paramètres, pas de calibration avant chaque usage (contrairement aux modèles de type ARMA), donc utilisable par des collègues. Il prédit la courbe à court terme&nbsp;; l’étude des dérivées premières de l’écart avec le signal réel signale une pointe, sans seuil de puissance fixe. Le délesteur applique alors les régimes réduits et estime l’impact sur le bâtiment.</p>
 <figure>
-<div class="ph"><img src="../../assets/img/outils-energie/courbe-charge-lissage.png" alt="Courbe de charge d’un bâtiment avant et après lissage (données fictives)" loading="lazy" onerror="this.remove()"></div>
+<div class="ph carre"><img src="../../assets/img/outils-energie/courbe-charge-lissage.png" alt="Courbe de charge d’un bâtiment avant et après lissage (données fictives)" loading="lazy" onerror="this.remove()"></div>
 <figcaption>Une courbe de charge avant et après lissage (données fictives).</figcaption>
 </figure>
 <p><strong>Les limites.</strong> La simulation agit sur les courbes de consommation plutôt que sur le comportement des équipements, et le lissage n’est pas garanti pour toutes les pointes.</p>
