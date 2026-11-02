@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4-tube Nixie clock: making something beautiful with what you have · Valentin Pataud</title>
+<meta name="description" content="A Nixie tube clock built in 2019 from salvaged materials: high-voltage electronics, wood and steel enclosure, embedded code. It still works seven years later.">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:title" content="4-tube Nixie clock: making something beautiful with what you have">
+<meta property="og:description" content="Six months of design, and a clock that is still running seven years later.">
+<link rel="alternate" hreflang="fr" href="https://valentinpataud.github.io/atelier/horloge-nixie/">
+<link rel="alternate" hreflang="en" href="https://valentinpataud.github.io/en/workshop/nixie-clock/">
+<link rel="alternate" hreflang="x-default" href="https://valentinpataud.github.io/atelier/horloge-nixie/">
+<link rel="stylesheet" href="../../../assets/css/style.css">
+<style>
+/* Layout specific to the article */
+.article{max-width:46rem;padding-top:2.5rem;padding-bottom:3rem}
+.article h1{max-width:none;font-size:clamp(1.75rem,4.5vw,2.5rem)}
+.article h2{margin-top:2.5rem}
+.article .back{display:inline-block;margin-bottom:1.5rem}
+figure{margin:1.75rem 0}
+figure .ph{max-width:none;margin:0}
+figcaption{margin-top:.5rem;color:var(--mu);font-size:.9rem}
+</style>
+</head>
+<body>
+<a class="skip" href="#contenu">Skip to content</a>
+<header><div class="wrap bar">
+<a class="brand" href="../../">Valentin Pataud</a>
+<button id="menu" aria-expanded="false" aria-controls="nav-list">Menu</button>
+<nav aria-label="Main navigation"><ul id="nav-list">
+<li><a href="../../">Home</a></li><li><a href="../../services/">Services</a></li><li><a href="../../projects/">Projects</a></li><li><a href="../../contact/">Contact</a></li>
+<li><a data-config="cv" href="#">Download the CV</a></li>
+<li class="lang"><a href="../../../atelier/horloge-nixie/" hreflang="fr" lang="fr" data-lang="fr" aria-label="Voir ce site en français">FR</a><span aria-hidden="true">/</span><span aria-current="true" aria-label="English (current language)">EN</span></li>
+</ul></nav></div></header>
+
+<main id="contenu"><article class="wrap article">
+<a class="back" href="../../">← Back to home</a>
+<h1>4-tube Nixie clock: making something beautiful with what you have</h1>
+<p class="lead"><em>Six months of design, and a clock that is still running seven years later.</em></p>
+
+<figure>
+<div class="ph"><img src="../../../assets/img/horloge-nixie/horloge-face.jpg" alt="The Nixie clock lit up, front view" loading="lazy" onerror="this.remove()"></div>
+<figcaption>The clock lit up, front view.</figcaption>
+</figure>
+
+<h2>The starting idea</h2>
+<p>This clock was born from a desire: to make something beautiful with what I had at hand, in an upcycling spirit. I was inspired by YouTube videos and articles found on the web, which gave me a taste for the steampunk aesthetic of Nixie tubes.</p>
+
+<h2>The electronics</h2>
+<p>The heart of the system is, once again, an Arduino Nano, programmed to read a DS1307 real-time clock module. It drives a chain of four 74HC595 shift registers, one per tube. These circuits in turn control MPSA42 transistors, able to withstand the 180&nbsp;V that the tubes require. This voltage is supplied by a dedicated power supply.</p>
+<p>The 4 QS27-1 tubes are backlit by RGB LEDs. Their colour and intensity are adjusted with a button on the back.</p>
+<p>The circuits are made by hand, on standard 2.54&nbsp;mm pitch boards, after trials on a breadboard. The electronic schematic and the C++ code were created entirely by hand, before the arrival of AI assistants.</p>
+<figure>
+<div class="ph"><img src="../../../assets/img/horloge-nixie/interieur-cartes.jpg" alt="View of the tubes" loading="lazy" onerror="this.remove()"></div>
+<figcaption>View of the tubes.</figcaption>
+</figure>
+<figure>
+<div class="ph"><img src="../../../assets/img/horloge-nixie/schema-synoptique.jpg" alt="Details of the front panel" loading="lazy" onerror="this.remove()"></div>
+<figcaption>Details of the front panel.</figcaption>
+</figure>
+
+<h2>The enclosure</h2>
+<p>The front and side panels are made of salvaged solid wood: baseboard or joinery panelling, cut on the CNC, glued, sanded and finished with wax.</p>
+<p>The top, back and bottom are galvanized steel sheet salvaged from an oven, sanded then bent.</p>
+<p>When sanded, the zinc of the galvanization reveals streaks that evoke Damascus steel, which gives the clock an appearance that I find very successful.</p>
+<figure>
+<div class="ph"><img src="../../../assets/img/horloge-nixie/detail-tole-bois.jpg" alt="Detail of the sanded steel sheet and the rear panel" loading="lazy" onerror="this.remove()"></div>
+<figcaption>Detail of the sheet metal and the rear panel.</figcaption>
+</figure>
+
+<h2>The tools</h2>
+<p>The machined or 3D-printed parts were drawn in SolidWorks and prepared for CAM in Fusion&nbsp;360. Machining is done on the CNC with Universal G-Code Sender, a very rudimentary toolchain but one that works well, and the printed parts were made on a first-generation Creality Ender&nbsp;3.</p>
+
+<h2>Seven years later</h2>
+<p>The clock is still here and still works, plugged in continuously. It has one known limitation: the DS1307 module drifts by a few minutes per week. One possible improvement would be to replace it with a temperature-compensated crystal module, such as the DS3231, which connects in the same way.</p>
+
+<h2>What I take from it</h2>
+<p>This project was a great learning curve in resourcefulness: electronics with high voltage, woodworking, machining, 3D printing, embedded programming. Above all, it taught me to do the best I can with what I have at hand.</p>
+
+<div class="btns"><a class="btn" href="../../contact/">Let’s discuss your project</a><a class="btn sec" href="../motion-control/">See the 3-axis motion control</a></div>
+</article></main>
+
+<footer><div class="wrap">Independent, not affiliated with Tulip Interfaces · <a href="../../legal-notice/">Legal notice</a> · © 2026</div></footer>
+<script src="../../../assets/js/config.js"></script>
+<script src="../../../assets/js/main.js"></script>
+
+</body>
+</html>

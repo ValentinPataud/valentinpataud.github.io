@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact · Valentin Pataud</title>
+<meta name="description" content="A digitalization project in a demanding or regulated environment? Write to me: describe your need and I will get back to you.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:title" content="Contact · Valentin Pataud">
+<meta property="og:description" content="Let’s talk about your digitalization project.">
+<link rel="alternate" hreflang="fr" href="https://valentinpataud.github.io/contact/">
+<link rel="alternate" hreflang="en" href="https://valentinpataud.github.io/en/contact/">
+<link rel="alternate" hreflang="x-default" href="https://valentinpataud.github.io/contact/">
+<link rel="stylesheet" href="../../assets/css/style.css">
+<style>
+/* Layout specific to the contact page */
+.form{max-width:42rem}
+.form label,.form legend{display:block;font-weight:600;margin-bottom:.3rem}
+.form .opt{font-weight:400;color:var(--mu);font-size:.9rem}
+.form input[type=text],.form input[type=email],.form input[type=tel],.form textarea{width:100%;font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:.4rem;padding:.6rem .75rem}
+.form textarea{min-height:11rem;resize:vertical}
+.form input:disabled{background:var(--bg2);color:var(--mu)}
+.form .row{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));margin-bottom:1.25rem}
+.form .field{margin-bottom:1.25rem}.form .row .field{margin-bottom:0}
+.tel{display:grid;grid-template-columns:5.5rem 1fr;gap:.5rem}
+.check{display:flex;align-items:center;gap:.5rem;margin-top:.5rem;font-weight:400!important}
+.check input{width:auto}
+.count{text-align:right;color:var(--mu);font-size:.85rem;margin:.25rem 0 0}
+.hp{display:none!important}
+#status{min-height:1.5rem;margin-top:1rem}
+#status.err{color:#b3261e}
+@media(prefers-color-scheme:dark){#status.err{color:#f2b8b5}}
+.btn:disabled{opacity:.6;cursor:wait}
+button.btn{font:inherit;font-weight:600;cursor:pointer}
+dialog{border:1px solid var(--bd);border-radius:.6rem;background:var(--bg);color:var(--tx);padding:1.75rem;max-width:24rem}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+dialog h2{margin:0 0 .75rem;font-size:1.4rem}
+</style>
+</head>
+<body>
+<a class="skip" href="#contenu">Skip to content</a>
+<header><div class="wrap bar">
+<a class="brand" href="../">Valentin Pataud</a>
+<button id="menu" aria-expanded="false" aria-controls="nav-list">Menu</button>
+<nav aria-label="Main navigation"><ul id="nav-list">
+<li><a href="../">Home</a></li><li><a href="../services/">Services</a></li><li><a href="../projects/">Projects</a></li><li><a href="../contact/" aria-current="page">Contact</a></li>
+<li><a data-config="cv" href="#">Download the CV</a></li>
+<li class="lang"><a href="../../contact/" hreflang="fr" lang="fr" data-lang="fr" aria-label="Voir ce site en français">FR</a><span aria-hidden="true">/</span><span aria-current="true" aria-label="English (current language)">EN</span></li>
+</ul></nav></div></header>
+
+<main id="contenu"><div class="wrap" style="padding-top:2.5rem;padding-bottom:3rem">
+<h1>Contact</h1>
+<p class="lead">A digitalization project in a demanding or regulated environment? Describe your need and I will get back to you.</p>
+<p class="note">Fields marked with an asterisk (*) are required.</p>
+
+<form id="contact" class="form" novalidate>
+<div class="row">
+<div class="field"><label for="nom">Last name *</label><input type="text" id="nom" name="nom" autocomplete="family-name" required></div>
+<div class="field"><label for="prenom">First name *</label><input type="text" id="prenom" name="prenom" autocomplete="given-name" required></div>
+</div>
+
+<div class="field"><label for="email">Email address *</label><input type="email" id="email" name="email" autocomplete="email" required></div>
+
+<div class="field"><label for="indicatif">Phone <span class="opt">(optional)</span></label>
+<div class="tel">
+<input type="text" id="indicatif" name="indicatif" value="+33" inputmode="tel" autocomplete="tel-country-code" aria-label="Country code" pattern="\+[0-9]{1,4}">
+<input type="tel" id="tel" name="tel" autocomplete="tel-national" aria-label="Phone number" placeholder="6 12 34 56 78">
+</div></div>
+
+<div class="field"><label for="adresse">Address <span class="opt">(optional)</span></label><input type="text" id="adresse" name="adresse" autocomplete="street-address"></div>
+
+<div class="field"><label for="societe">Company *</label>
+<input type="text" id="societe" name="societe" autocomplete="organization" required>
+<label class="check"><input type="checkbox" id="particulier" name="particulier"> I am an individual</label></div>
+
+<div class="field"><label for="objet">Subject of your request *</label><input type="text" id="objet" name="objet" maxlength="120" required></div>
+
+<div class="field"><label for="message">Message *</label>
+<textarea id="message" name="message" maxlength="5000" required></textarea>
+<p class="count" aria-live="off"><span id="n">0</span> / 5,000 characters</p></div>
+
+<input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+<button class="btn" type="submit" id="envoi">Send</button>
+<p id="status" role="status"></p>
+<p class="note">The information you enter is used solely to respond to your request.</p>
+</form>
+</div></main>
+
+<dialog id="done" aria-labelledby="done-t">
+<h2 id="done-t">Message sent</h2>
+<p>Thank you, your message has been sent. I will get back to you shortly.</p>
+<form method="dialog"><button class="btn">Close</button></form>
+</dialog>
+
+<footer><div class="wrap">Independent, not affiliated with Tulip Interfaces · <a href="../legal-notice/">Legal notice</a> · © 2026</div></footer>
+<script src="../../assets/js/config.js"></script>
+<script src="../../assets/js/main.js"></script>
+<script>
+(function () {
+  var f = document.getElementById('contact'), st = document.getElementById('status'),
+      btn = document.getElementById('envoi'), soc = document.getElementById('societe'),
+      part = document.getElementById('particulier'), msg = document.getElementById('message'),
+      n = document.getElementById('n'), dlg = document.getElementById('done');
+
+  function v(id) { return document.getElementById(id).value.trim(); }
+  function say(t, err) { st.textContent = t; st.className = err ? 'err' : ''; }
+
+  part.addEventListener('change', function () {
+    soc.disabled = part.checked; soc.required = !part.checked;
+    if (part.checked) soc.value = '';
+  });
+  msg.addEventListener('input', function () { n.textContent = msg.value.length; });
+
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var key = window.SITE_CONFIG.web3formsKey || {};
+    if (!f.checkValidity()) { f.reportValidity(); return; }
+    if (v('tel') && !/^\+[0-9]{1,4}$/.test(v('indicatif'))) { say('The country code must be in the form +33.', true); return; }
+    if (!key) { say('The form is not active yet. Please write to me directly by email.', true); return; }
+
+    var d = new Date(), p = function (x) { return String(x).padStart(2, '0'); },
+        date = p(d.getDate()) + '/' + p(d.getMonth() + 1) + '/' + p(d.getFullYear() % 100);
+    var data = {
+      access_key: key,
+      from_name: 'Site Valentin Pataud',
+      subject: '(' + date + ') ' + v('nom') + ' - ' + v('prenom') + ' / ' + v('objet'),
+      Nom: v('nom'), Prénom: v('prenom'), email: v('email'),
+      Téléphone: v('tel') ? v('indicatif') + ' ' + v('tel') : 'Non renseigné',
+      Adresse: v('adresse') || 'Non renseignée',
+      Société: part.checked ? 'Particulier' : v('societe'),
+      Objet: v('objet'), message: msg.value.trim(),
+      botcheck: f.botcheck.checked
+    };
+
+    btn.disabled = true; say('Sending…');
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(data)
+    }).then(function (r) { return r.json(); }).then(function (j) {
+      if (!j.success) throw new Error(j.message);
+      f.reset(); soc.disabled = false; soc.required = true; n.textContent = '0'; say('');
+      if (dlg.showModal) dlg.showModal(); else alert('Message sent');
+    }).catch(function () {
+      say('Sending failed. Please try again, or write to me directly by email.', true);
+    }).then(function () { btn.disabled = false; });
+  });
+})();
+</script>
+</body>
+</html>

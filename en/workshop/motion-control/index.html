@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3-axis motion control: slider, pan/tilt head and app · Valentin Pataud</title>
+<meta name="description" content="Three years of design, machining and programming: a 90 cm slider, a motorized pan/tilt head and an Android app to control a camera for timelapse and video.">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:title" content="Design and construction of a 3-axis motion control system">
+<meta property="og:description" content="Slider, pan/tilt head and Android app: a complete system designed and built over three years.">
+<link rel="alternate" hreflang="fr" href="https://valentinpataud.github.io/atelier/motion-control/">
+<link rel="alternate" hreflang="en" href="https://valentinpataud.github.io/en/workshop/motion-control/">
+<link rel="alternate" hreflang="x-default" href="https://valentinpataud.github.io/atelier/motion-control/">
+<link rel="stylesheet" href="../../../assets/css/style.css">
+<style>
+/* Layout specific to the article */
+.article{max-width:46rem;padding-top:2.5rem;padding-bottom:3rem}
+.article h1{max-width:none;font-size:clamp(1.75rem,4.5vw,2.5rem)}
+.article h2{margin-top:2.5rem}
+.article .back{display:inline-block;margin-bottom:1.5rem}
+figure{margin:1.75rem 0}
+figure .ph{max-width:none;margin:0}
+figcaption{margin-top:.5rem;color:var(--mu);font-size:.9rem}
+.gallery{display:grid;gap:.75rem;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr))}
+.gallery .ph{margin:0}
+figure .ph.vertical{aspect-ratio:9/16;max-width:405px;margin-left:auto;margin-right:auto}
+.ph.vertical img{object-fit:contain}
+</style>
+</head>
+<body>
+<a class="skip" href="#contenu">Skip to content</a>
+<header><div class="wrap bar">
+<a class="brand" href="../../">Valentin Pataud</a>
+<button id="menu" aria-expanded="false" aria-controls="nav-list">Menu</button>
+<nav aria-label="Main navigation"><ul id="nav-list">
+<li><a href="../../">Home</a></li><li><a href="../../services/">Services</a></li><li><a href="../../projects/">Projects</a></li><li><a href="../../contact/">Contact</a></li>
+<li><a data-config="cv" href="#">Download the CV</a></li>
+<li class="lang"><a href="../../../atelier/motion-control/" hreflang="fr" lang="fr" data-lang="fr" aria-label="Voir ce site en français">FR</a><span aria-hidden="true">/</span><span aria-current="true" aria-label="English (current language)">EN</span></li>
+</ul></nav></div></header>
+
+<main id="contenu"><article class="wrap article">
+<a class="back" href="../../">← Back to home</a>
+<h1>Design and construction of a 3-axis motion control system: slider, pan/tilt head and app</h1>
+<p class="lead"><em>Three years of design, machining and programming to control a camera the way I imagined it.</em></p>
+
+<figure>
+<div class="ph"><img src="../../../assets/img/motion-control/robot-complet.gif" alt="The complete robot in action, slider and head assembled, during a movement" loading="lazy" onerror="this.remove()"></div>
+<figcaption>The complete robot in action, slider and head assembled.</figcaption>
+</figure>
+
+<h2>Why build your own motion control system?</h2>
+<p>I have been doing timelapse since I bought my first camera. After the intervalometer I had already built, the next step was missing: making the camera move during shooting, adding an artistic dimension to my images, making them unique.</p>
+<p>Commercial systems, such as the Syrp Magic Carpet and the Genie Mini II, were my inspiration, thanks to the work of artists like Morten Rustad. Looking for a challenge, I wanted to understand every cog, dive in and build something that corresponds exactly to my needs.</p>
+<p>The result of my 3-year project is a modular system made up of two independent but connectable robots: a <strong>90&nbsp;cm slider</strong> and a motorized <strong>pan/tilt head</strong>, controllable from a custom-developed <strong>Android app</strong>. The whole took me three years: one year for the slider, two for the head.</p>
+
+<h2>The slider: mechanics first</h2>
+<figure>
+<div class="ph vertical"><img src="../../../assets/img/motion-control/chariot-piste.gif" alt="The slider carriage moving along the track" loading="lazy" onerror="this.remove()"></div>
+</figure>
+<p>The track is 90&nbsp;cm long, made of two aluminium profiles (V-slot) spaced 15&nbsp;cm apart. It is the fourth iteration: the first three, based on round steel tubes, did not satisfy me. At the ends, organically shaped “end caps” provide the rigidity and stability of the robot. A tripod can be screwed on, or legs can be unfolded to place the slider on the ground.</p>
+<p>The carriage is the centrepiece: it carries a NEMA&nbsp;17 stepper motor and an ultra-quiet TMC2225 motor driver, and it is controlled by an Arduino Nano. It moves along a GT2 belt tensioned by a screw system. Its deliberately minimalist front panel brings together an electronic trigger for the camera (3.5&nbsp;mm jack), charging, a switch, and two Ethernet connectors diverted from their intended use: one for the wired HMI, the other to connect the head.</p>
+<p>In its latest version, the slider was given an HC-06 module, connected to the Arduino over a serial link, to enable Bluetooth connectivity, like the motorized head. This addition allows control of the robot to evolve from the wired HMI to a custom Android app.</p>
+<p>This robot can move a 3&nbsp;kg payload at up to 35&nbsp;mm/s, with a resolution of 0.1&nbsp;mm.</p>
+<figure>
+<div class="ph"><img src="../../../assets/img/motion-control/facade-chariot.jpg" alt="The carriage front panel: connecting the head" loading="lazy" onerror="this.remove()"></div>
+</figure>
+
+<h2>The pan/tilt head: two years of iterations</h2>
+<figure>
+<div class="ph"><img src="../../../assets/img/motion-control/tete-pan-tilt.gif" alt="Pan then tilt movement of the head" loading="lazy" onerror="this.remove()"></div>
+</figure>
+<p>This is the hardest part, and I am not a mechanical engineer. Arm flexion, payload, vibrations, stick-slip of the worm gear train in my first version: it took many iterations to find a compromise.</p>
+<p>The final version relies on two L-shaped arms, made of aluminium tubes and flat bars machined by hand. The large arm rotates the whole assembly (pan). It is mounted on a housing that echoes the aesthetic of the carriage. The small arm, fixed to the end of the large one, tilts the camera (tilt). Each axis is driven by a small NEMA&nbsp;17 motor with a 5:1 belt mechanical reduction, controlled in open loop, with limit switches in the arms.</p>
+<p>The mechanics of the robot, coupled with the microstepping capabilities of the motor drivers, give a theoretical precision of 0.02° on the movement, for a maximum speed of 10°/s.</p>
+<p>One point mattered a great deal: I aligned the camera’s centre of balance with the robot’s axes, which greatly reduces the effort required from the motors.</p>
+<p>In total, the head weighs 1.5&nbsp;kg, can move a balanced payload of 1.5&nbsp;kg and runs for about 10 hours on battery. A quick-release system allows fast assembly with the slider.</p>
+
+<h2>A design conceived in 3D, built with what I had</h2>
+<figure>
+<div class="ph"><img src="../../../assets/img/motion-control/modele-solidworks.gif" alt="The 3D model of the robot in SolidWorks" loading="lazy" onerror="this.remove()"></div>
+<figcaption>The SolidWorks model.</figcaption>
+</figure>
+<p>Everything was drawn in SolidWorks, with load studies and reduction calculations to size the whole.</p>
+<p>The parts are machined on the lathe, on the CNC and by hand, or 3D-printed in PETG for its mechanical strength (cable routing, gearbox mounts). The PVC elements come from salvaged tubes: split lengthwise, heated, flattened into sheets, then cut and glued. The same spirit as for my <a href="../nixie-clock/">Nixie clock</a>: making something beautiful with what you have.</p>
+
+<h2>Electronics and embedded software</h2>
+<figure>
+<div class="ph"><img src="../../../assets/img/motion-control/cartes-electroniques.jpg" alt="Home-made electronic boards, open views of the slider and the head" loading="lazy" onerror="this.remove()"></div>
+<figcaption>The home-made electronic boards, slider and head open.</figcaption>
+</figure>
+<p>The circuits are made in-house. The slider runs around an Arduino Nano, the head around an ESP32, which is more powerful and has native Bluetooth. Both share the same home-made 12&nbsp;V quick-release battery (inspired by power drills), which I also use on all my other projects.</p>
+<p>The head’s program, in C++, is about 5,000 lines and manages several processes in parallel: motors, interface, communication, camera, status indicators. When the head is connected to the slider, it becomes the <strong>master</strong> and the slider becomes the <strong>slave</strong>. They talk over a UART link with a protocol I designed, inspired by Modbus: frames, function codes, checksums, acknowledgements. The slider then behaves like a small PLC that receives orders (movements, positions, battery level) and reports back on them.</p>
+
+<h2>The app: from LCD screen to smartphone</h2>
+<figure>
+<div class="ph"><img src="../../../assets/img/motion-control/interface-application.gif" alt="The Android app interface: joysticks and menus" loading="lazy" onerror="this.remove()"></div>
+</figure>
+<p>Initially, control was done through an LCD screen and a rotary encoder on the front panel. The Android app takes over these functions with the comfort of a smartphone. I developed it as part of a semester project at engineering school, with the invaluable help of my friends Thomas D, Julien C and Rémi J.</p>
+<p>It is mainly developed in Java, on Android Studio. Its interface is reminiscent of a drone remote control, with virtual joysticks and menus. You define key positions, the speed and duration of the movement, then the mode: <em>shoot-move-shoot</em> or smooth movement, timelapse or video. There is even a panorama feature to reconstruct a 360° photo with a conventional camera.</p>
+<p>And above all, the app does not drive the robot live: it transmits parameters, and it is the ESP32’s algorithms that build the camera’s trajectory. Once configured, the robot can be disconnected from the phone and runs its sequence on its own.</p>
+<figure>
+<div class="ph"><img src="../../../assets/img/motion-control/sequence-autonome.gif" alt="Autonomous sequence: the robot works alone, phone set down next to it" loading="lazy" onerror="this.remove()"></div>
+</figure>
+
+<h2>What I take from it</h2>
+<p>This ambitious project forced me to connect disciplines that I had been practising separately: mechanics, electronics, embedded programming, communication protocols, mobile app development. It also taught me to iterate without getting attached to a solution: three attempts before the right one, a worm gear abandoned, a wired interface replaced by Bluetooth.</p>
+
+<h2>Gallery</h2>
+<p>Photos and timelapses made with the robot.</p>
+<div class="gallery">
+<div class="ph"><img src="../../../assets/img/motion-control/galerie-01.jpg" alt="Photo taken with the robot, 1" loading="lazy" onerror="this.remove()"></div>
+<div class="ph"><img src="../../../assets/img/motion-control/galerie-02.jpg" alt="Photo taken with the robot, 2" loading="lazy" onerror="this.remove()"></div>
+<div class="ph"><img src="../../../assets/img/motion-control/galerie-03.jpg" alt="Photo taken with the robot, 3" loading="lazy" onerror="this.remove()"></div>
+<div class="ph"><img src="../../../assets/img/motion-control/galerie-04.jpg" alt="Photo taken with the robot, 4" loading="lazy" onerror="this.remove()"></div>
+</div>
+
+<div class="btns"><a class="btn" href="../../contact/">Let’s discuss your project</a><a class="btn sec" href="../../">Back to home</a></div>
+</article></main>
+
+<footer><div class="wrap">Independent, not affiliated with Tulip Interfaces · <a href="../../legal-notice/">Legal notice</a> · © 2026</div></footer>
+<script src="../../../assets/js/config.js"></script>
+<script src="../../../assets/js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>An MES as the single entry point for production · Valentin Pataud</title>
+<meta name="description" content="Case study: design of an MES on a low-code platform, connected to SAP, to orchestrate manufacturing orders, times, anomalies and electronic batch records.">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:title" content="An MES as the single entry point for production">
+<meta property="og:description" content="Design of an MES connected to the ERP to improve traceability, automate exchanges and strengthen business continuity in production.">
+<link rel="alternate" hreflang="fr" href="https://valentinpataud.github.io/realisations/mes-low-code-sap/">
+<link rel="alternate" hreflang="en" href="https://valentinpataud.github.io/en/projects/low-code-mes-sap/">
+<link rel="alternate" hreflang="x-default" href="https://valentinpataud.github.io/realisations/mes-low-code-sap/">
+<link rel="stylesheet" href="../../../assets/css/style.css">
+</head>
+<body>
+<a class="skip" href="#contenu">Skip to content</a>
+<header><div class="wrap bar">
+<a class="brand" href="../../">Valentin Pataud</a>
+<button id="menu" aria-expanded="false" aria-controls="nav-list">Menu</button>
+<nav aria-label="Main navigation"><ul id="nav-list">
+<li><a href="../../">Home</a></li><li><a href="../../services/">Services</a></li><li><a href="../../projects/" aria-current="page">Projects</a></li><li><a href="../../contact/">Contact</a></li>
+<li><a data-config="cv" href="#">Download the CV</a></li>
+<li class="lang"><a href="../../../realisations/mes-low-code-sap/" hreflang="fr" lang="fr" data-lang="fr" aria-label="Voir ce site en français">FR</a><span aria-hidden="true">/</span><span aria-current="true" aria-label="English (current language)">EN</span></li>
+</ul></nav></div></header>
+
+<main id="contenu">
+<section><div class="wrap">
+<p class="note"><a href="../">← All projects</a></p>
+<h1>An MES as the single entry point for production</h1>
+<p class="lead">On a diagnostic instrument assembly line, order management, time entry and anomaly tracking were brought together in a single MES, developed on a low-code platform and connected to the ERP.</p>
+<p class="note">19 October 2026 · Valentin Pataud</p>
+<ul class="tags">
+<li>MES</li><li>Tulip</li><li>SAP</li><li>Node-RED</li><li>REST API</li><li>ISA-95</li><li>DDMRP</li>
+</ul>
+<p>This case study presents the design choices, the interfaces between systems and the lessons learned from the deployment.</p>
+<div class="btns">
+<a class="btn" href="../../contact/">Let’s discuss your project</a>
+<a class="btn sec" href="../">All projects</a>
+</div>
+</div></section>
+<section class="alt"><div class="wrap">
+<h2>The starting point</h2>
+<p>Operators used three separate applications: one for manufacturing orders, one for time entry and one for certain assembly sub-lines. Each application had its own logic and its own interface.</p>
+<p>This fragmentation led to incomplete traceability between steps — serial numbers, yields and material movements —, recurring discrepancies between the times entered and those recorded in the ERP, and manual supervisor interventions to reconcile the information.</p>
+</div></section>
+<section><div class="wrap">
+<h2>The objective</h2>
+<p>The objective was to give every operator a single entry point for the activities at their workstation, while preserving traceability:</p>
+<ul>
+<li>a clear view of the orders to process, by line and by workstation;</li>
+<li>tracking of serial numbers and quantities from one step to the next;</li>
+<li>simple time entry, transmitted automatically to the ERP;</li>
+<li>better handling of anomalies, integrated into the production flow;</li>
+<li>operation robust enough to keep certain activities running when neighbouring systems are unavailable.</li>
+</ul>
+</div></section>
+<section class="alt"><div class="wrap">
+<h2>What the MES does</h2>
+<p>The MES distributes manufacturing orders to the assembly benches according to the priorities from the DDMRP schedule, while respecting the chronological order of operations: an assembly step cannot be performed before the test step that precedes it is complete.</p>
+<p>Quantities are tracked between operations. The quantity available for a step cannot exceed that produced at the previous step. Serial numbers accompany the product throughout the process. An order can only be closed when all its phases are complete, and material consumptions follow the phases confirmed in the ERP.</p>
+<p>Non-standard work, line stoppages or material rework are declared directly from the MES, with the order information pre-filled. These declarations then feed time tracking and production indicators.</p>
+</div></section>
+<section><div class="wrap">
+<h2>A standard interface for electronic batch records</h2>
+<p>Electronic batch records (DHR) are full-fledged applications and sensitive components of the system. The MES communicates with them through a standard interface that updates the order — quantity, serial number and status — when a DHR step is completed.</p>
+<p>Three families of DHR were distinguished according to the relationship between the order, the serial number and the ERP phases:</p>
+<ul>
+<li>an order comprising several phases to complete;</li>
+<li>an order associated with a single phase;</li>
+<li>a standalone DHR, for which the order must be retrieved from the serial number.</li>
+</ul>
+<p>Each family has its own interface flow. The design principle is to limit the impact of the interface on the DHR as much as possible: if it fails, it must neither modify nor corrupt the DHR’s data.</p>
+<p>Connecting a new DHR is designed to limit the impact on the existing application. The need for revalidation must nevertheless be assessed according to the client’s quality procedures, based on the risks and the impact of the change.</p>
+</div></section>
+<section class="alt"><div class="wrap">
+<h2>Designing for business continuity</h2>
+<p>Handling unavailability is part of the design requirements. If the ERP or the planning tool is unavailable, orders can be entered by the supervisor and appear to operators as being in progress.</p>
+<p>Order import has a parallel flow that works without the planning tool. API call timeouts have also been lengthened to limit failures caused by response times.</p>
+<p>One trade-off remains to be managed: inserting orders in bulk directly into a table can be convenient, but it bypasses certain data integrity rules. This type of mechanism must be documented, controlled and assessed against the procedures applicable to the system.</p>
+</div></section>
+<section><div class="wrap">
+<h2>Automating for reliability</h2>
+<p>Time entry was a major source of discrepancies. Automations now replace several manual supervisor actions and the data transmission loops to the ERP, in order to reduce missing or duplicate records.</p>
+<p>Checks alert the operator to any missing entry, while leave can be declared in a single operation for a full period.</p>
+</div></section>
+<section class="alt"><div class="wrap">
+<h2>Architecture</h2>
+<p>The system relies on an architecture organized according to the ISA-95 model:</p>
+<ol class="steps">
+<li><strong>Level 2 — Acquisition and supervision</strong><br>A SCADA layer based on Node-RED feeds back instrument data.</li>
+<li><strong>Level 3 — Production execution</strong><br>The MES, developed on a low-code platform, orchestrates orders, batch records, anomalies and time entry.</li>
+<li><strong>Level 4 — Enterprise management</strong><br>The SAP ERP holds the management data and receives production confirmations.</li>
+</ol>
+<p>The MES thus acts as the coordination point between the production applications, the equipment and the ERP.</p>
+<!-- Add a redrawn ISA-95 architecture diagram here, without application screenshots. -->
+</div></section>
+<section><div class="wrap">
+<h2>Results</h2>
+<div class="grid">
+<div class="stat"><b>≈ 116 h/year</b>of paper traceability eliminated</div>
+<div class="stat"><b>A single entry point</b>for operators at their production workstation</div>
+<div class="stat"><b>Integrated flows</b>between orders, batch records, anomalies, times and ERP</div>
+</div>
+<p>The solution reduces manual supervisor interventions and ensures continuous traceability, from the manufacturing order down to the serial number. Delivery also includes a maintenance guide and up-to-date workflow diagrams, to make the system easier to understand and to evolve in the future.</p>
+</div></section>
+<section class="alt"><div class="wrap">
+<h2>Lessons learned</h2>
+<ol>
+<li><strong>An MES is first and foremost a set of rules.</strong> The order of operations, the available quantities and the closing conditions structure the system; the interface comes afterwards.</li>
+<li><strong>You have to design for failure.</strong> A production system must anticipate the unavailability of its dependencies and clearly define which activities can keep running.</li>
+<li><strong>You have to control dependencies.</strong> Limiting the effects of an interface on connected applications makes changes easier, without replacing the quality assessment needed for each change.</li>
+<li><strong>Documentation is part of the deliverable.</strong> Without a flow map and an up-to-date guide, connecting a new DHR risks depending on the memory of a single person.</li>
+</ol>
+</div></section>
+<section><div class="wrap">
+<h2>Technologies and methods</h2>
+<p>Tulip · SAP · Node-RED · REST API · DDMRP · ISA-95</p>
+<p class="note">Tulip expertise, independent of any affiliation with Tulip Interfaces.</p>
+<div class="btns">
+<a class="btn" href="../../services/">Discover the services</a>
+<a class="btn sec" href="../../contact/">Let’s discuss your project</a>
+</div>
+</div></section>
+</main>
+
+<footer><div class="wrap">Independent, not affiliated with Tulip Interfaces · <a href="../../legal-notice/">Legal notice</a> · © 2026</div></footer>
+<script src="../../../assets/js/config.js"></script>
+<script src="../../../assets/js/main.js"></script>
+
+</body>
+</html>

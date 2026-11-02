@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Engineering tools for the energy transition · Valentin Pataud</title>
+<meta name="description" content="Three years of engineering tools built around Excel and VBA: sizing and costing of EV charging stations and photovoltaics, smart building management simulated by machine learning.">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:title" content="Engineering tools for the energy transition">
+<meta property="og:description" content="Encapsulating a complex technique so that non-specialists produce reliable studies.">
+<link rel="alternate" hreflang="fr" href="https://valentinpataud.github.io/realisations/outils-ingenierie-energie/">
+<link rel="alternate" hreflang="en" href="https://valentinpataud.github.io/en/projects/energy-engineering-tools/">
+<link rel="alternate" hreflang="x-default" href="https://valentinpataud.github.io/realisations/outils-ingenierie-energie/">
+<link rel="stylesheet" href="../../../assets/css/style.css">
+<style>
+/* Layout specific to the article */
+.article{max-width:46rem;padding-top:2.5rem;padding-bottom:3rem}
+.article h1{max-width:none;font-size:clamp(1.75rem,4.5vw,2.5rem)}
+.article h2{margin-top:2.5rem;max-width:none}
+.article .back{display:inline-block;margin-bottom:1.5rem}
+.article ol.list{max-width:68ch;padding-left:1.25rem}
+.article ol.list li{margin-bottom:.9rem}
+figure{margin:1.75rem 0}
+figure .ph{max-width:none;margin:0}
+figcaption{margin-top:.5rem;color:var(--mu);font-size:.9rem}
+figure .ph.carre{aspect-ratio:14.7/16;max-width:30rem;margin-left:auto;margin-right:auto}
+.ph.carre img{object-fit:contain}
+</style>
+</head>
+<body>
+<a class="skip" href="#contenu">Skip to content</a>
+<header><div class="wrap bar">
+<a class="brand" href="../../">Valentin Pataud</a>
+<button id="menu" aria-expanded="false" aria-controls="nav-list">Menu</button>
+<nav aria-label="Main navigation"><ul id="nav-list">
+<li><a href="../../">Home</a></li><li><a href="../../services/">Services</a></li><li><a href="../../projects/">Projects</a></li><li><a href="../../contact/">Contact</a></li>
+<li><a data-config="cv" href="#">Download the CV</a></li>
+<li class="lang"><a href="../../../realisations/outils-ingenierie-energie/" hreflang="fr" lang="fr" data-lang="fr" aria-label="Voir ce site en français">FR</a><span aria-hidden="true">/</span><span aria-current="true" aria-label="English (current language)">EN</span></li>
+</ul></nav></div></header>
+
+<main id="contenu"><article class="wrap article">
+<a class="back" href="../../">← Back to home</a>
+<h1>Engineering tools for the energy transition</h1>
+<p class="lead">For three years, I designed engineering tools built around Excel and VBA: two sizing and costing tools (electric vehicle charging, photovoltaics) and an approach to smart building management, simulated with machine learning. What they have in common: encapsulating a complex technique so that sales staff and business engineers, who are not electrical specialists, can produce reliable studies.</p>
+
+<h2>The context</h2>
+<p>The goal is to respond to energy transition offers with structured approaches and precise costings. My mission: automate technical studies and standardize methods, making the technical side invisible to the user. I led most of these projects on my own, then became the technical lead on EV charging and photovoltaics for the sales and technical teams.</p>
+
+<h2>Tool 1: sizing and costing of EV charging stations</h2>
+<p><strong>The principle.</strong> The user describes the installation with little information, all of it non-technical: charging station model, cable, conduit and trench lengths, concrete base if any. The tool sizes the entire electrical part, from the delivery point to the charging stations, then costs the whole.</p>
+<p><strong>The architecture.</strong> A main interface, a reference database and processing modules driven by VBA macros.</p>
+<p><strong>The modelling.</strong> An installation is a graph: the nodes are the charging stations and the electrical panels, the edges are the cabled links. This representation is easy for a machine to process and remains readable for colleagues. A tutorial and technical documentation explain the method.</p>
+<figure>
+<div class="ph"><img src="../../../assets/img/outils-energie/graphe-irve.png" alt="Graph of a charging installation: charging stations, electrical panels and cabled links (fictitious data)" loading="lazy" onerror="this.remove()"></div>
+<figcaption>The graph of a charging installation (fictitious data).</figcaption>
+</figure>
+<p><strong>The calculations.</strong> Cable cross-sections, ratings of protective devices, enclosure sizes, conduit and trench dimensions, in compliance with the NF C 15-100 standard, then selection of references from the database. The aggregation of power relies on a combinatorial optimization algorithm inspired by the knapsack problem: it distributes the loads across the three phases to obtain the lowest possible maximum line power. The stakes are economic, because the price of equipment rises sharply with the rating of protective devices and cables.</p>
+<p><strong>The network.</strong> The charging stations communicate with a supervision service via the OCPP protocol. The tool also costs the associated IT network: switches, 4G modem, subscription.</p>
+<p><strong>The costing.</strong> For each charging station and each panel: references, unit prices, quantities and unit installation times, calibrated on feedback from experience and the opinion of professionals. Administrative procedures are included. The result serves as a reference for building an offer and for challenging subcontractors’ prices.</p>
+
+<h2>Tool 2: photovoltaic sizing and costing</h2>
+<p><strong>The need.</strong> On one side, well-established marketing and performance guarantees; on the other, tools for calculating yield and for financial studies. What was missing was the intermediate link: the installation itself, with its technical characteristics, its limits and its fairest price. I started with technology and regulatory monitoring, including on battery storage, before designing the tool.</p>
+<p><strong>The architecture.</strong> An equipment database, a dynamic interface, calculation and optimization algorithms, a single-line diagram generator and a quote and business plan export. Several months of work.</p>
+<p><strong>An interface that guides.</strong> The choices offered adapt to the previous answers, which limits design errors. The data requested stays simple (roof sections, orientation, estimated lengths), never voltages or currents.</p>
+<p><strong>The modelling.</strong> A reference architecture represented as a tree: the delivery point at the root, then an electrical panel, the inverters, their inputs, the panel strings and the junction boxes. I removed everything superfluous to keep only the skeleton of an installation.</p>
+<figure>
+<div class="ph"><img src="../../../assets/img/outils-energie/arbre-photovoltaique.png" alt="Tree of a photovoltaic installation, from the delivery point to the panel strings (fictitious data)" loading="lazy" onerror="this.remove()"></div>
+<figcaption>The tree of a photovoltaic installation (fictitious data).</figcaption>
+</figure>
+<p><strong>The key algorithm.</strong> For each roof section, the tool calculates a panel layout, then looks for the series/parallel wiring that respects the voltage and current limits of the inverters while limiting the number of strings, and therefore of inverter inputs used. Modelling this problem with modular arithmetic (solving systems of congruences “in reverse”) was the real difficulty: several days of work, for a program written in VBA.</p>
+<p><strong>The deliverables.</strong> A single-line diagram drawn automatically with Excel’s graphical tools, precise enough to be reviewed by experts, and a quote whose formulas remain visible, with adjustable margin rates and optional services (maintenance, cleaning, insurance, remote management).</p>
+<p><strong>The deployment.</strong> Presentation to the sales teams, documentation with examples, then follow-up and continuous improvement based on user feedback.</p>
+
+<h2>Tool 3: smart building management (Smart Grid)</h2>
+<p><strong>The scope.</strong> My final-year project, on a little-developed subject. The aim was not a ready-to-use product, but a study approach to estimate the financial and energy stakes of managing consumption.</p>
+<p><strong>The principle.</strong> The load curve of a building is the sum of its consumptions, which I split into two categories: controlled consumers (heat pumps, ventilation, air conditioning) and stochastic consumers (lighting, electronics). When a peak appears, the system acts on the controlled equipment, within the limits of their usage constraints (temperature, CO<sub>2</sub> level, humidity): load shedding or reduced mode, according to a priority order. The result is a smoothing of the load curve and a reduction of the subscribed power.</p>
+<p><strong>The simulation.</strong> An algorithm in Python, driven from Excel, simulates the operation of a control unit. It offers two simulations: a statistical estimate over one year from a sample of randomly drawn days (a much faster calculation, with a controlled margin of error), and a simulation over a few consecutive days to visualize the effect. The summary compares power and energy before and after control, and puts a figure on the annual saving on the subscription.</p>
+<p><strong>The real challenge: detecting peaks in time.</strong> An STL decomposition (<em>Seasonal and Trend decomposition</em>) splits the curve into seasonality, trend and residuals: a peak is an anomaly relative to the natural behaviour of the building. But how do you predict what you cannot describe?</p>
+<p>To tell peaks apart from the normal signal, you have to smooth. Any mathematical smoothing of a real-time signal lags behind; exponential smoothing gives a controlled lag. I then tested differentiation and several anomaly detection models (Local Outlier Factor, autoencoder, KNN, via the PyOD library, validated with AUROC). None was conclusive: seasonality drowns out the peaks, and the peak has to arrive before it can be detected.</p>
+<p><strong>The chosen solution.</strong> A predictive model, Prophet, chosen for its simplicity: few parameters, no calibration before each use (unlike ARMA-type models), and therefore usable by colleagues. It predicts the curve in the short term; studying the first derivatives of the gap with the real signal flags a peak, without a fixed power threshold. The load shedder then applies the reduced modes and estimates the impact on the building.</p>
+<figure>
+<div class="ph carre"><img src="../../../assets/img/outils-energie/courbe-charge-lissage.png" alt="Load curve of a building before and after smoothing (fictitious data)" loading="lazy" onerror="this.remove()"></div>
+<figcaption>A load curve before and after smoothing (fictitious data).</figcaption>
+</figure>
+<p><strong>The limits.</strong> The simulation acts on consumption curves rather than on the behaviour of the equipment, and smoothing is not guaranteed for every peak.</p>
+
+<h2>Why Excel</h2>
+<p>The choice of Excel was imposed at the outset. I turned it into an advantage: an intuitive tool, with no installation, easy to maintain and already mastered by design and business engineers. VBA provides the logic, the dynamic interfaces and the diagram generation; Python provides the machine learning, called from Excel. The flip side is a requirement for rigour: a file that carries business rules must be structured and documented like software.</p>
+
+<h2>What I take from it</h2>
+<ol class="list">
+<li>The hardest part is not the calculation, but the balance between the simplicity of what the user sees and the complexity of what the tool does.</li>
+<li>Modelling the problem is the real work: a graph, a tree or a system of congruences then make the algorithm simple.</li>
+<li>The best model is the one the user can run alone: I set aside more conventional models because they required calibration at each use.</li>
+<li>Documenting and training are part of the deliverable: tutorial, technical documentation, presentation to the teams, follow-up.</li>
+<li>This approach is the one I apply today, in a more tightly regulated environment.</li>
+</ol>
+
+<h2>Technologies</h2>
+<ul class="tags"><li>Excel</li><li>VBA</li><li>Python</li><li>Prophet</li><li>STL decomposition</li><li>Combinatorial optimization</li><li>Graphs</li><li>Modular arithmetic</li><li>OCPP protocol</li><li>NF C 15-100 standard</li></ul>
+
+<div class="btns"><a class="btn" href="../../contact/">Let’s discuss your project</a><a class="btn sec" href="../electronic-batch-records/">See the DHR case study</a></div>
+</article></main>
+
+<footer><div class="wrap">Independent, not affiliated with Tulip Interfaces · <a href="../../legal-notice/">Legal notice</a> · © 2026</div></footer>
+<script src="../../../assets/js/config.js"></script>
+<script src="../../../assets/js/main.js"></script>
+
+</body>
+</html>

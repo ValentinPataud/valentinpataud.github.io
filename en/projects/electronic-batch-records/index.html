@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digitalizing batch records (DHR) in a medical device environment · Valentin Pataud</title>
+<meta name="description" content="Lessons learned: from paper records to connected DHRs on a low-code platform. 14 applications developed, validated and deployed, including 11 electronic batch records.">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:title" content="Digitalizing batch records (DHR) in a medical device environment">
+<meta property="og:description" content="From paper records to connected DHRs, on a low-code platform.">
+<link rel="alternate" hreflang="fr" href="https://valentinpataud.github.io/realisations/dossiers-de-lot-electroniques/">
+<link rel="alternate" hreflang="en" href="https://valentinpataud.github.io/en/projects/electronic-batch-records/">
+<link rel="alternate" hreflang="x-default" href="https://valentinpataud.github.io/realisations/dossiers-de-lot-electroniques/">
+<link rel="stylesheet" href="../../../assets/css/style.css">
+<style>
+/* Layout specific to the article */
+.article{max-width:46rem;padding-top:2.5rem;padding-bottom:3rem}
+.article h1{max-width:none;font-size:clamp(1.75rem,4.5vw,2.5rem)}
+.article h2{margin-top:2.5rem}
+.article .back{display:inline-block;margin-bottom:1.5rem}
+.article ul.list{max-width:68ch;padding-left:1.25rem}
+.article ul.list li{margin-bottom:.9rem}
+figure{margin:1.75rem 0}
+figure .ph{max-width:none;margin:0}
+figcaption{margin-top:.5rem;color:var(--mu);font-size:.9rem}
+figure .ph.vertical{aspect-ratio:5/7;max-width:26rem;margin-left:auto;margin-right:auto}
+.ph.vertical img{object-fit:contain}
+</style>
+</head>
+<body>
+<a class="skip" href="#contenu">Skip to content</a>
+<header><div class="wrap bar">
+<a class="brand" href="../../">Valentin Pataud</a>
+<button id="menu" aria-expanded="false" aria-controls="nav-list">Menu</button>
+<nav aria-label="Main navigation"><ul id="nav-list">
+<li><a href="../../">Home</a></li><li><a href="../../services/">Services</a></li><li><a href="../../projects/">Projects</a></li><li><a href="../../contact/">Contact</a></li>
+<li><a data-config="cv" href="#">Download the CV</a></li>
+<li class="lang"><a href="../../../realisations/dossiers-de-lot-electroniques/" hreflang="fr" lang="fr" data-lang="fr" aria-label="Voir ce site en français">FR</a><span aria-hidden="true">/</span><span aria-current="true" aria-label="English (current language)">EN</span></li>
+</ul></nav></div></header>
+
+<main id="contenu"><article class="wrap article">
+<a class="back" href="../../">← Back to home</a>
+<h1>Digitalizing batch records (DHR) in a medical device environment</h1>
+<p class="lead"><em>Lessons learned: from paper records to connected DHRs, on a low-code platform.</em></p>
+
+<h2>The context</h2>
+<p>Every medical device that is manufactured comes with a batch record, the DHR (<em>Device History Record</em>), which proves that its manufacture meets the requirements. For two years at bioMérieux, in Florence, I digitalized these records on the Tulip low-code platform. In total, 14 applications were developed, validated and deployed, including 11 DHRs.</p>
+<figure>
+<div class="ph vertical"><img src="../../../assets/img/dossiers-de-lot/schema-applications.png" alt="Overview of the 14 applications and their roles" loading="lazy" onerror="this.remove()"></div>
+</figure>
+
+<h2>Why digitalize a DHR</h2>
+<p>Paper does its job, but it isolates information: it stays in the record until the record is closed, entered by hand, reviewed after the fact. Digitalizing the DHR changes the game: information becomes available in real time to other departments, checks are carried out as work progresses, and the record no longer depends on a physical medium.</p>
+<p>In addition, permanently storing batch records becomes less of a burden than archiving mountains of sheets.</p>
+
+<h2>What the applications do</h2>
+<ul class="list">
+<li><strong>Recipes and business operations.</strong> Batch records are the trace of the operations carried out during production. Their digital version can go beyond simply recording activities: it can guide operators through the manufacturing instructions, embed production recipes and automatically use the results of operations. Some checks can thus be performed directly on the line, as production proceeds. The digital DHR then becomes much more than a regulatory traceability tool: it actively contributes to the execution, control and reliability of operations.</li>
+<li><strong>Controlled access.</strong> Access to digitalized DHRs (EBR, <em>Electronic Batch Record</em>) is controlled, which meets the requirement to know who did what. The DHRs then implement what is known as a “Role-Based Access Control” system.</li>
+<li><strong>Production orders.</strong> The MES, interfaced with SAP, distributes production orders to the assembly benches according to a DDMRP (<em>Demand Driven Material Requirements Planning</em>) schedule. These production orders cross-reference the data between the serial numbers coming off the lines and the administrative management of the plant.</li>
+<li><strong>Serial numbers.</strong> They are created and tracked across the whole process, including line scrap, with an interface to the anomaly management system.</li>
+<li><strong>Plant integration.</strong> They replace paper and give real-time information to the departments concerned, including the warehouse (spare parts, supply chain).</li>
+<li><strong>Automated quality control.</strong> Checks are done in real time, with a review by exception at the end of the process: attention goes to the deviations.</li>
+<li><strong>Instrument data.</strong> It feeds directly into the DHR, without re-entry, via a data management system at level 2 of the ISA-95 model.</li>
+</ul>
+<figure>
+<div class="ph"><img src="../../../assets/img/dossiers-de-lot/capture-dhr.png" alt="Anonymized screenshot of a step in a digitalized DHR" loading="lazy" onerror="this.remove()"></div>
+<figcaption>A step in a digitalized DHR (anonymized screenshot).</figcaption>
+</figure>
+
+<h2>The architecture</h2>
+<p>The whole follows the ISA-95 model. At level 2, Node-RED provides a SCADA- and IoT-type layer: it collects the instrument data and feeds it back to the DHR. At level 3, the Tulip platform acts as the MES. The design follows the ALCOA+ data integrity principles, and the whole was validated and qualified, following the 21&nbsp;CFR Part&nbsp;11 and ISO&nbsp;13485 standards.</p>
+<figure>
+<div class="ph"><img src="../../../assets/img/dossiers-de-lot/schema-architecture-isa95.png" alt="Simplified ISA-95 architecture: levels 2 and 3" loading="lazy" onerror="this.remove()"></div>
+<figcaption>Simplified ISA-95 architecture, levels 2 and 3.</figcaption>
+</figure>
+
+<h2>Compliance and role</h2>
+<p>My role covers design, development and deployment. Responsibility for validation remains with the company: I took part in validations as technical lead for the risk and compliance studies, and acted as test executor on certain other systems. The applications are delivered compliant with the regulatory requirements indicated.</p>
+
+<h2>Results</h2>
+<ul class="list">
+<li>14 applications deployed, including 11 DHRs, a quality management application and the MES.</li>
+<li>About 1,100 hours per year saved (estimate) in production and quality, plus about 116 hours per year of paper traceability eliminated thanks to the MES.</li>
+<li>A deployment first in Florence, then expertise applied at other sites in France.</li>
+<li>Grand Prix Talents V.I.E &amp; ALUMNI 2026, innovation category.</li>
+</ul>
+
+<h2>What I take from it</h2>
+<p>On Tulip or other low-code platforms, the code matters little. The essential lies elsewhere: mapping the process, translating it into a digitalized process, then integrating it in a regulated environment, with the governance, traceability and access control that go with it. This is the work that makes it possible to move from paper to a reliable, auditable system.</p>
+
+<div class="btns"><a class="btn" href="../../contact/">Let’s discuss your project</a><a class="btn sec" href="../low-code-mes-sap/">See the MES case study</a></div>
+</article></main>
+
+<footer><div class="wrap">Independent, not affiliated with Tulip Interfaces · <a href="../../legal-notice/">Legal notice</a> · © 2026</div></footer>
+<script src="../../../assets/js/config.js"></script>
+<script src="../../../assets/js/main.js"></script>
+
+</body>
+</html>
