@@ -38,3 +38,6 @@ h3{font-size:1.15rem;margin:0 0 .5rem}p{max-width:68ch;margin:0 0 1rem}
 .portrait img{grid-area:1/1;width:100%;height:100%;object-fit:cover;object-position:50% 20%}.portrait span{grid-area:1/1}
 footer{padding:2rem 0;border-top:1px solid var(--bd);color:var(--mu);font-size:.9rem}
 .center{min-height:60vh;display:grid;align-content:center;justify-items:start}
+.lang{display:flex;align-items:center;gap:.35rem;font-weight:600;font-size:.9rem}
+.lang [aria-current]{color:var(--ac)}
+.lang span[aria-hidden]{color:var(--mu)}
