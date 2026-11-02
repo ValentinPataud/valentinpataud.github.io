@@ -10,4 +10,19 @@
   if (b && l) b.addEventListener('click', function () {
     b.setAttribute('aria-expanded', l.classList.toggle('open'));
   });
+
+  // Language toggle: remember the visitor's choice (FR / EN)
+  document.querySelectorAll('[data-lang]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      try { localStorage.setItem('lang', a.dataset.lang); } catch (e) {}
+    });
+  });
+  // On the French home page only: a visitor who previously chose English lands on /en/.
+  // Skipped when arriving from another page of this site (e.g. the "Valentin Pataud" logo).
+  try {
+    if (document.body.dataset.home === 'fr' && localStorage.getItem('lang') === 'en') {
+      var internal = document.referrer && document.referrer.indexOf(location.origin) === 0;
+      if (!internal) location.replace('en/');
+    }
+  } catch (e) {}
 })();
